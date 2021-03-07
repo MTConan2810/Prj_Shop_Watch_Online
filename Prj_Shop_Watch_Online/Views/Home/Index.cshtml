@@ -1,0 +1,174 @@
+﻿@using Prj_Shop_Watch_Online.Models
+@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Products>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Galle VN";
+    SWODBContext db = new SWODBContext();
+}
+
+<div>
+    <ol class="breadcrumb breadcrumb-instro">
+        <li class="breadcrumb-item"><a href="/"><i class="fa fa-forward" aria-hidden="true"></i>Trang chủ</a></li>
+        <li class="breadcrumb-item active">Đồng hồ</li>
+    </ol>
+</div>
+<div style="margin:15px 0;">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+    <form>
+        <div id="searchALL">
+            <span>@Html.DropDownList("gioitinh",null, "Giới Tính", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
+            <span>@Html.DropDownList("thuonghieu",null,"Thương hiệu", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
+            <span>
+                <select id="loaimay" name="giafrom" class="Filter">
+                    <option value="">Mức giá</option>
+                    <option value="2000000">dưới 2 triệu</option>
+                </select>
+            </span>
+        </div>       
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        <div style="background-color:#f5f5f5; position:relative;text-align:center;">
+            <h2 style="font-variant-caps:normal; color:darkslategray;padding-top:5px;padding-bottom:3px;">Đồng Hồ @ViewBag.SexSearch @ViewBag.THSearch</h2>
+            <div style="position:absolute; right:50px; bottom:10px; width:100px; height:20px; font-size:16px;text-align:center">
+                <select name="sortOder" id="sortOder" style="background-color: white; border: 1px solid #b3b3b3; border-radius: 8px;" onchange="this.form.submit();">
+                    @if (!string.IsNullOrEmpty(ViewBag.CurrentSort))
+                    {
+                        <option value="@ViewBag.CurrentSort">@ViewBag.CurrentSort</option>                        
+                    }
+                    <option value="">-Sắp theo tên-</option>
+                    <option value="@ViewBag.SapTheoTen">@ViewBag.SapTheoTen</option>
+                    <option value="@ViewBag.KhuyenMai">@ViewBag.KhuyenMai</option>
+                    <option value="@ViewBag.SapTheoGia">@ViewBag.SapTheoGia</option>
+                    <option value="@ViewBag.SapTheoGia_DESC">@ViewBag.SapTheoGia_DESC</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            @if (!string.IsNullOrEmpty(ViewBag.THSearch))
+            {
+                <button class="btn btn-primary">
+                    @ViewBag.THSearch <i class="fas fa-times"></i>
+                </button>               
+                <a class="btn btn-danger" href="@Url.Action("Index","Home")">Xoá hết <i class="fas fa-times"></i></a>
+            }
+        </div>
+    </form>
+    }
+</div>
+@{ 
+    var checkkm = from km in db.Promotions where km.Status == true select km;
+    var result = from obj in Model
+                 from km in checkkm.ToList()
+                 where obj.Id == km.ProductId || obj.BrandId == km.BrandId || km.ApplyForAll == true
+                 orderby obj.TenSp
+                 select obj;
+    Boolean checkQuyen(int code)
+    {
+        Boolean check = false;
+        foreach (var abc in result.ToList())
+        {
+            if (abc.Id == code)
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
+}
+@if (Model.Count > 0)
+{
+    <div class="row row-cols-4 row-cols-md-4 g-4 clearfix">
+        @foreach (var item in Model)
+        {
+            var anh = db.ProductImage.Where(s => s.ProductId == item.Id).Select(s => s).ToList();
+            var kmResult = db.Promotions.ToList();
+            
+            
+            <div class="col col-md-3 col-sm-4 item col-xs-6 post-scroll">
+                <div class="card h-100 border-primary mb-3" id="product">
+                    @foreach (var obj in anh)
+                    {
+                        if (obj.IsDefault == true)
+                        {
+                            string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
+                            <a href="@Url.Action("ProductDetails","Home", new { id = item.Id})"><img src="@Url.Content(ImagePath)" class="card-img-top" alt="@obj.Caption" title="@obj.Caption"></a>                          
+                        }
+
+                    }
+                <div class="card-body">
+                    <h5 class="card-title" style="font-weight:bold;">Đồng hồ @Html.DisplayFor(model => item.TenSp) @Html.DisplayFor(model => item.MaSp)</h5>
+                    <p class="card-text" style="font-variant-caps:normal; font-style:italic; color:cadetblue;">@Html.DisplayFor(model => item.Brands.TenTH)</p>
+                    @if (checkQuyen(item.Id) == false)
+                    {
+                        <p>Giá: @String.Format("{0:C}", item.Gia)</p>
+                    }
+                    @foreach (var km in kmResult)
+                    {
+                        decimal? giakm = 0;
+                        if (km.ApplyForAll == true && km.Status == true)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                giakm = item.Gia - (decimal)item.Gia * km.DiscountPercent / 100;
+                                <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                                <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                giakm = item.Gia - (decimal)km.DiscountAmount;
+                                <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
+                                <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            }
+
+                        }
+                        else if (km.ProductId == item.Id || km.BrandId == item.BrandId && km.Status == true)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                giakm = item.Gia - (decimal)item.Gia * km.DiscountPercent / 100;
+                                <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                                <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                giakm = item.Gia - (decimal)km.DiscountAmount;
+                                <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
+                                <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            }
+                        }
+
+                    }
+
+
+                </div>                    
+                    @if (item.SoLuong > 0)
+                    {
+                        <div class="add-to-cart">
+                            <a class="add-to-cart-btn" href="#"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-footer">
+                            <small class="text-muted">Hết hàng</small>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="col-md-4 offset-8">
+        Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+}
+else
+{
+    <div style="text-align:center; color:orangered; font-style:italic; font-weight:200;">
+        <h2>Không tìm thấy sản phẩm phù hợp...!!</h2>
+    </div>
+    
+}
+

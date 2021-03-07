@@ -1,0 +1,200 @@
+﻿@model Prj_Shop_Watch_Online.Models.Products
+
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ProductDetails</h2>
+
+<div class="col-md-9">
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color:aquamarine; ">
+        <li class="nav-item" role="presentation" style="width:35%;">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="width:100%">Thông số kĩ thuật</button>
+        </li>
+        <li class="nav-item" role="presentation" style="width:35%">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" style="width:100%">Hướng dẫn sử dụng</button>
+        </li>
+        <li class="nav-item" role="presentation" style="width:30%">
+            <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false" style="width:100%">Bảo hành</button>
+        </li>
+        @*<li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+            </li>*@
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div>
+                <h4>Products</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Brands.TenTH)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Brands.TenTH)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MaSp)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MaSp)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TenSp)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TenSp)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Gia)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Gia)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.GioiTinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.GioiTinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LoaiDH)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LoaiDH)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.KieuDH)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.KieuDH)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DoChiuNuoc)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DoChiuNuoc)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ChucNang)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ChucNang)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Vo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Vo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LoaiDay)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LoaiDay)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DuongKinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DuongKinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LoaiMay)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LoaiMay)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MauMat)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MauMat)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MatKinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MatKinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MoTa)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MoTa)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SoLuong)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SoLuong)
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            @{
+                Html.RenderPartial("_HDSuDung");
+            }
+        </div>
+        <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+            @{
+                Html.RenderPartial("_BaoHanh");
+            }
+        </div>
+        @*<div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...cass</div>*@
+    </div>
+    <script>
+        var firstTabEl = document.querySelector('#myTab li:last-child a')
+        var firstTab = new bootstrap.Tab(firstTabEl)
+
+        firstTab.show()
+    </script>
+    <script>
+        var tabEl = document.querySelector('button[data-bs-toggle="tab"]')
+        tabEl.addEventListener('shown.bs.tab', function (event) {
+            event.target // newly activated tab
+            event.relatedTarget // previous active tab
+        })
+    </script>
+</div>
+
+
+
+
+

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Shops>
+
+@using Prj_Shop_Watch_Online.Models
+@{
+    ViewBag.Title = "Showrooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SWODBContext db = new SWODBContext();
+}
+<div>
+    <ol class="breadcrumb breadcrumb-instro">
+        <li class="breadcrumb-item"><a href="/"><i class="fa fa-forward" aria-hidden="true"></i>Trang chủ</a></li>
+        <li class="breadcrumb-item active">Hệ thống cửa hàng Galle</li>
+    </ol>
+</div>
+<div style="background-color:#f5f5f5;">
+    <h2 style="color:darkslategray; text-align:center;padding-top:5px;padding-bottom:3px;">HỆ THỐNG CỬA HÀNG</h2>
+</div>
+<div class="btn-group" role="group" style="margin-bottom:20px;">
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+    @if (ViewBag.shopaddress == null)
+    {
+        <a class="btn btn-outline" for="btnradio1" href="@Url.Action("Shop","Home",new { address="" })">Tất cả Showroom</a>
+    }
+    else
+    {
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+        <a class="btn btn-primary btn-outline-primary" for="btnradio4" href="@Url.Action("Shop","Home",new { address="" })">Tất cả Showroom</a>
+        <a class="btn btn-outline" for="btnradio1" href="@Url.Action("Shop","Home",new { address="" })">@ViewBag.shopaddress</a>
+    }
+    @{
+        string add = ViewBag.shopaddress;
+        IEnumerable<string> query = (from s in db.Shops where (!s.Address.Equals(add)) select s.Address).Distinct();
+        foreach (var item in query)
+        {
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <a class="btn btn-primary btn-outline-primary" for="btnradio2" href="@Url.Action("Shop","Home",new { address=item })">@item</a>
+        }
+    }
+</div>
+<div class="row clearfix">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-12 item col-xs-6 post-scroll" style="min-height:270px">
+            <div class="col-md-5">
+                @{
+                    string ImagePath = "~/wwwroot/ImageShop/" + item.ImageShop;
+                }
+                <img src="@Url.Content(ImagePath)" width="450" height="250" />
+            </div>
+            <div class="col-md-7">
+                <dl class="dl-horizontal" style="margin-left:-90px;">
+                    <dt>
+                        Chi nhánh:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => item.ChiNhanh),@Html.DisplayFor(model => item.Address)
+                    </dd>
+                    <dt>
+                        Điện thoại:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => item.DienThoai)
+                    </dd>
+                    <dt style="padding-right:40px;">
+                        Mail:
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => item.Mail)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    }
+</div>
+

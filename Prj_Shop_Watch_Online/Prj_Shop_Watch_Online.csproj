@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D2CA424A-9DEC-4191-B193-A9B598A70775}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Prj_Shop_Watch_Online</RootNamespace>
+    <AssemblyName>Prj_Shop_Watch_Online</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44317</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103020301351_init.cs" />
+    <Compile Include="Migrations\202103020301351_init.Designer.cs">
+      <DependentUpon>202103020301351_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppFunction.cs" />
+    <Compile Include="Models\AppFunctionGroupRole.cs" />
+    <Compile Include="Models\AppGroupRole.cs" />
+    <Compile Include="Models\AppList.cs" />
+    <Compile Include="Models\Brands.cs" />
+    <Compile Include="Models\Comments.cs" />
+    <Compile Include="Models\model_session\Cart.cs" />
+    <Compile Include="Models\model_session\FindProduct.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\ProductImage.cs" />
+    <Compile Include="Models\Products.cs" />
+    <Compile Include="Models\Promotions.cs" />
+    <Compile Include="Models\Shops.cs" />
+    <Compile Include="Models\SWODBContext.cs" />
+    <Compile Include="Models\UserGroupRole.cs" />
+    <Compile Include="Models\Users.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="wwwroot\ImageBrands\800px-rado_uhrenmarke_logosvg_1500971861-min_1519293413.png" />
+    <Content Include="wwwroot\ImageBrands\al_1476774643.png" />
+    <Content Include="wwwroot\ImageBrands\ber_1476775793.png" />
+    <Content Include="wwwroot\ImageBrands\bre_1476774103.png" />
+    <Content Include="wwwroot\ImageBrands\can_1476776278.png" />
+    <Content Include="wwwroot\ImageBrands\cen_1476774432.png" />
+    <Content Include="wwwroot\ImageBrands\certina-logo-170x31_1540519375.png" />
+    <Content Include="wwwroot\ImageBrands\chro_1476776091.png" />
+    <Content Include="wwwroot\ImageBrands\citi_1476775619.png" />
+    <Content Include="wwwroot\ImageBrands\dg_1476776799_1504146552.png" />
+    <Content Include="wwwroot\ImageBrands\dk-logo-01_1608622507.png" />
+    <Content Include="wwwroot\ImageBrands\eb_1476774932.png" />
+    <Content Include="wwwroot\ImageBrands\en_1476775010.png" />
+    <Content Include="wwwroot\ImageBrands\fc_1476774587.png" />
+    <Content Include="wwwroot\ImageBrands\fd_1476776452.png" />
+    <Content Include="wwwroot\ImageBrands\fes_1476775721.png" />
+    <Content Include="wwwroot\ImageBrands\freelook-logo_1501466021-min_1519293236.png" />
+    <Content Include="wwwroot\ImageBrands\he_1476776516.png" />
+    <Content Include="wwwroot\ImageBrands\logo-jaguar-130x72_1533094126.png" />
+    <Content Include="wwwroot\ImageBrands\long_1476777093.png" />
+    <Content Include="wwwroot\ImageBrands\mido_1476775151.png" />
+    <Content Include="wwwroot\ImageBrands\mos_1476776760.png" />
+    <Content Include="wwwroot\ImageBrands\or_1476774312.png" />
+    <Content Include="wwwroot\ImageBrands\pl_1476776201.png" />
+    <Content Include="wwwroot\ImageBrands\pre_1476773941.png" />
+    <Content Include="wwwroot\ImageBrands\rms_1476776013.png" />
+    <Content Include="wwwroot\ImageBrands\rm_1476775067.png" />
+    <Content Include="wwwroot\ImageBrands\se_1476775494.png" />
+    <Content Include="wwwroot\ImageBrands\ss_1476776370.png" />
+    <Content Include="wwwroot\ImageBrands\sunflame-logoo-3_1590055830.png" />
+    <Content Include="wwwroot\ImageBrands\thuong-hieu-dong-ho-hegner-galle-watch_1602757061.png" />
+    <Content Include="wwwroot\ImageBrands\thuong-hieu-dong-ho-master-works-galle-watch-01_1603853907.png" />
+    <Content Include="wwwroot\ImageBrands\tss1_1511923884.png" />
+    <Content Include="wwwroot\ImageBrands\tss2_1511923874.png" />
+    <Content Include="wwwroot\ImageBrands\ts_1476776929.png" />
+    <Content Include="wwwroot\ImageBrands\z1_1504233263.png" />
+    <Content Include="wwwroot\ImageProducts\01210-031171 -1_1548834509.png.png" />
+    <Content Include="wwwroot\ImageProducts\01210-031171 -2_1548834512.png.png" />
+    <Content Include="wwwroot\ImageProducts\01210_031171-removebg-preview_1575968807.png" />
+    <Content Include="wwwroot\ImageProducts\20010_4_1564044651.png" />
+    <Content Include="wwwroot\ImageProducts\AL-525VG4E6%282%29_1540287954.png.png" />
+    <Content Include="wwwroot\ImageProducts\AL-525VG4E6%283%29_1540287956.png.png" />
+    <Content Include="wwwroot\ImageProducts\al-525vg4e6_1499842295.png" />
+    <Content Include="wwwroot\ImageProducts\c4293_7_C4292_7.png" />
+    <Content Include="wwwroot\ImageProducts\c4293_7_copy.png" />
+    <Content Include="wwwroot\ImageProducts\c4929_7.png" />
+    <Content Include="wwwroot\ImageProducts\ck_1567952145.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\dk1125533-copy_1608627664.png" />
+    <Content Include="wwwroot\ImageProducts\dk11255331_1608627645.png.png" />
+    <Content Include="wwwroot\ImageProducts\dk1125533_1608627655.png.png" />
+    <Content Include="wwwroot\ImageProducts\DSC_5546.jpg" />
+    <Content Include="wwwroot\ImageProducts\DW0287%281%29.png" />
+    <Content Include="wwwroot\ImageProducts\DW0287%282%29.png" />
+    <Content Include="wwwroot\ImageProducts\DW0287_1.png" />
+    <Content Include="wwwroot\ImageProducts\f200104-2_1569829432.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\f200104_1569829432.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\GG6688_2533__LG6688_2533.png" />
+    <Content Include="wwwroot\ImageProducts\GG6688_2533_1.png" />
+    <Content Include="wwwroot\ImageProducts\k6l2m111_1522287588.png" />
+    <Content Include="wwwroot\ImageProducts\LE_copy.png" />
+    <Content Include="wwwroot\ImageProducts\LG6688_2533_1.png" />
+    <Content Include="wwwroot\ImageProducts\mat.jpg" />
+    <Content Include="wwwroot\ImageProducts\mjoe9083-pi1001-2_1599727035.png" />
+    <Content Include="wwwroot\ImageProducts\mjoe9083-pi1003_1600072379.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\mjoe9083-pi_1600072596.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\ra-ac0e07s10b-1_1574842791.png.png" />
+    <Content Include="wwwroot\ImageProducts\ra-ac0e07s10b_1__1574842791.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\ra-ac0e07s_jpg_1574842792.png" />
+    <Content Include="wwwroot\ImageProducts\susb406_1504148202.png" />
+    <Content Include="wwwroot\ImageProducts\syxs1022_1560843401.png.png" />
+    <Content Include="wwwroot\ImageProducts\syxs102_1560843424.png" />
+    <Content Include="wwwroot\ImageProducts\syxs1192_1557108934.png" />
+    <Content Include="wwwroot\ImageProducts\syxs119_1590031057.jpg.jpg" />
+    <Content Include="wwwroot\ImageProducts\syxs119_1590208280.png.png" />
+    <Content Include="wwwroot\ImageProducts\TM4259MCWH.png" />
+    <Content Include="wwwroot\ImageProducts\TM4259MCWH_4.png" />
+    <Content Include="wwwroot\ImageProducts\tm4259smcwh_1597204248.png.png" />
+    <Content Include="wwwroot\ImageProducts\_kem1256_1572423496.jpg.jpg" />
+    <Content Include="wwwroot\ImageShop\156-nkt_1562118496.jpg" />
+    <Content Include="wwwroot\ImageShop\41-thi-sach_1561344821.jpg" />
+    <Content Include="wwwroot\ImageShop\56403681_2824532934238463_8886985533897572352_o_1554689506.jpg" />
+    <Content Include="wwwroot\ImageShop\717-cmt8-min_1554260690.jpg" />
+    <Content Include="wwwroot\ImageShop\72-tran-phu-thanh-hoajpg_1562118141.jpg" />
+    <Content Include="wwwroot\ImageShop\aeon-long-bien_1562118591.jpg" />
+    <Content Include="wwwroot\ImageShop\anh-cua-hang-galle-watch-big-c-thang-long_1601532517.jpg" />
+    <Content Include="wwwroot\ImageShop\anh-cua-hang-galle-watch-vincom-nguyen-chi-thanh-0210_1601602314.jpg" />
+    <Content Include="wwwroot\ImageShop\big-c-pandora-min_1554261168.jpg" />
+    <Content Include="wwwroot\ImageShop\cua-hang-dong-ho-thuy-sy-galle-watch-hai-ba-trung_1609984727.jpg" />
+    <Content Include="wwwroot\ImageShop\cua-hang-galle-watch-vincom-bac-ninh-01_1602897174.jpg" />
+    <Content Include="wwwroot\ImageShop\galle-watch-bigc-hai-phong_1599538640.jpg" />
+    <Content Include="wwwroot\ImageShop\galle-watch-quang-trung-tphcm_1599538233.jpg" />
+    <Content Include="wwwroot\ImageShop\galle-watch-times-city-ha-noi_1599539002.jpg" />
+    <Content Include="wwwroot\ImageShop\galle-watch-vincom-hai-phong_1601966446.jpg" />
+    <Content Include="wwwroot\ImageShop\galle-watch-vinh-trung-plaza_1593142383.jpg" />
+    <Content Include="wwwroot\ImageShop\haiduong_1519725936.jpg" />
+    <Content Include="wwwroot\ImageShop\ien-bien-phu-min_1554261380.jpg" />
+    <Content Include="wwwroot\ImageShop\le-van-sy-min_1554261427.jpg" />
+    <Content Include="wwwroot\ImageShop\lotte-1_1562119509.jpg" />
+    <Content Include="wwwroot\ImageShop\lotte-mart-go-vap_1572251423.jpg" />
+    <Content Include="wwwroot\ImageShop\maximark-cong-hoa-min_1554261527.jpg" />
+    <Content Include="wwwroot\ImageShop\outlet-thai-ha-3_1562119715.jpg" />
+    <Content Include="wwwroot\ImageShop\rado-min_1554261553.jpg" />
+    <Content Include="wwwroot\ImageShop\royal-city-1_1562119754.jpg" />
+    <Content Include="wwwroot\ImageShop\showroom-orient-min_1554261656.jpg" />
+    <Content Include="wwwroot\ImageShop\vc-ba-trieujpg_1562119825.jpg" />
+    <Content Include="wwwroot\ImageShop\vc-tdh-2_1562119944.jpg" />
+    <Content Include="wwwroot\ImageShop\vincom-bien-hoa-min_1554261722.jpg" />
+    <Content Include="wwwroot\ImageShop\vincom-da-nang-2_1562120114.jpg" />
+    <Content Include="wwwroot\ImageShop\vincom-thu-duc-min_1554261743.jpg" />
+    <Content Include="wwwroot\Logo-Banner\227x334_1600851082.jpg" />
+    <Content Include="wwwroot\Logo-Banner\banner-galle-1_1612509086.jpg" />
+    <Content Include="wwwroot\Logo-Banner\banner-gallevn_1611799014.jpg" />
+    <Content Include="wwwroot\Logo-Banner\banner-highlife-galle_1605510737.jpg" />
+    <Content Include="wwwroot\Logo-Banner\bo-cong-thuong.png" />
+    <Content Include="wwwroot\Logo-Banner\galle-tet_1612593383.jpg" />
+    <Content Include="wwwroot\Logo-Banner\galle_1604975660.jpg" />
+    <Content Include="wwwroot\Logo-Banner\menu_06.png" />
+    <Content Include="wwwroot\Logo-Banner\vang_1519616094.png" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_Nav.cshtml" />
+    <Content Include="Views\Home\Shop.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Home\ProductDetails.cshtml" />
+    <Content Include="Views\Home\_HDSuDung.cshtml" />
+    <Content Include="Views\Home\_BaoHanh.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\Cart\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202103020301351_init.resx">
+      <DependentUpon>202103020301351_init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58612</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44317/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

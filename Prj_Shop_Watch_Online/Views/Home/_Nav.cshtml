@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Brands>
+
+<nav class="navbar navbar-expand-lg" id="nav-mainmenu">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <span>
+                <i class="fas fa-home fa-lg" id="nav-name"></i>
+            </span>
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" role="button" id="nav-name">
+                        THƯƠNG HIỆU
+                    </a>
+                    <ul class="dropdown-menu" style="width:1050px;">
+                        @foreach (var item in Model)
+                        {
+                            string ImagePath = "~/wwwroot/ImageBrands/" + item.AnhTH;
+                            <li id="dropId">
+                                <a class="dropdown-item" href="@Url.Action("Index","Home", new { thuonghieu = item.TenTH })">
+                                    <img src="@Url.Content(ImagePath)" title="@item.TenTH" role="button" style="width:95px;height:55px; background-color:aquamarine" />
+                                </a>
+                            </li>
+                        }
+                        @*<li id="dropId">
+                                <a class="dropdown-item" href="#">Menu 1</a>
+                            </li>
+                            <li id="dropId"><a class="dropdown-item" href="#">Menu item 2</a> </li>
+                            <li id="dropId"><img class="dropdown-item" alt="là ảnh" width:"50px" /></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Menu 3 ...</a></li>*@
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" role="button" id="nav-name" href="@Url.Action("Index","Home", new { gioitinh = "Nam"})">
+                        ĐỒNG HỒ NAM
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" role="button" id="nav-name" href="@Url.Action("Index","Home", new { gioitinh = "Nữ"})">
+                        ĐỒNG HỒ NỮ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" role="button" id="nav-name">
+                        DỊCH VỤ
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" role="button" id="nav-name" href="@Url.Action("Shop","Home")">
+                        HỆ THỐNG CỬA HÀNG
+                    </a>
+                </li>
+                <li class="nav-item" style="margin-top:-10px;">
+                    <a class="btn" role="button" style="color:yellow; font-size:16px;">
+                        <span><i class="fas fa-phone-volume"></i> 1800 6785 (miễn phí)</span>/                     
+                        <span><i class="fas fa-envelope"></i> info@galle.vn</span>
+                    </a>
+                </li>
+                <li class="nav-item" style="margin-right:0;">
+                    <img src="~/wwwroot/Logo-Banner/menu_06.png" style="width:100px;height:50px;" />
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
