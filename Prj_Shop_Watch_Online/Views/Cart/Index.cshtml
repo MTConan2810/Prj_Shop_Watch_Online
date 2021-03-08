@@ -46,23 +46,23 @@
                         <td>khuyến mãi</td>
                         <td>Thành tiền</td>
                         <td>
-                            <button class="btn btn-success" name="ProductId"
+                            <button class="btn btn-success" name="productId"
                                     data-ProductId="@item.Products.Id" id="btnUpdate">
                                 Cập nhật
                             </button>
-                            <a href="@Url.Action("RemoveCart","Cart",new { masp = item.Products.Id })"
+                            <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
                                class="btn btn-danger" id="btnXoa">Xóa</a>
                         </td>
                     </tr>
                 }
                 <tr>
                     <td colspan="6" class="text-right">Tổng tiền</td>
-                    <td>@String.Format("{0:C}", total) VNĐ</td>
+                    <td>@String.Format("{0:C}", total)</td>
                     <td></td>
                 </tr>
             </tbody>
         </table>
-        <a id="btnDathang" class="btn btn-primary" href="@Url.Action("PayMent","Cart")">Đặt hàng</a>
+        <a id="btnDathang" class="btn btn-primary" href="@Url.Action("PT_PayMent","Cart")">Đặt hàng</a>
     }
     else
     {
