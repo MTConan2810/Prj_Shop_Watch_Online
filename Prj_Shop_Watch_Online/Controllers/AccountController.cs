@@ -17,7 +17,7 @@ namespace Prj_Shop_Watch_Online.Controllers
 
         // GET: Account
         public ActionResult Register()
-        {            
+        {           
             return View();
         }
 
@@ -30,11 +30,18 @@ namespace Prj_Shop_Watch_Online.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    
-                    db.Users.Add(users);
-                    await db.SaveChangesAsync();
+                    if(users.Active == true)
+                    {
+                        db.Users.Add(users);
+                        await db.SaveChangesAsync();                        
+                    }
+                    else
+                    {
+                        ViewBag.thongbao = "Bạn vui lòng đồng ý với chính sách và điều khoản sử dụng";
+                        return View(users);
+                    }
                 }
-                return RedirectToAction("Register");
+                return RedirectToAction("Login");   
             }
             else
             {
@@ -51,18 +58,25 @@ namespace Prj_Shop_Watch_Online.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string TenDangNhap, string MatKhau)
+        public ActionResult Login(string Username, string Password)
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.Where(u => u.Username.Equals(TenDangNhap) && u.Password.Equals(MatKhau)).ToList();
+                var user = db.Users.Where(u => u.Username.Equals(Username) && u.Password.Equals(Password)).ToList();
                 if (user.Count() > 0)
                 {
                     //add session
                     Session["HoTen"] = user.FirstOrDefault().FullName;
                     Session["Email"] = user.FirstOrDefault().Email;
-                    Session["idUser"] = user.FirstOrDefault().Id;                                       
-                    return RedirectToAction("Index","Home");
+                    Session["idUser"] = user.FirstOrDefault().Id;
+                    if(user.FirstOrDefault().Active == true)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ViewBag.error = "Tài khoản của bạn đã bị khoá! Vui lòng liên hệ 1800 6785...!";
+                    }
                 }
                 else
                 {

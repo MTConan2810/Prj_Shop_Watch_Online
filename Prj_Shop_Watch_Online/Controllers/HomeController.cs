@@ -157,17 +157,23 @@ namespace Prj_Shop_Watch_Online.Controllers
             return View(comments);
         }
 
-
-
-
-
-
-
-
         public PartialViewResult _Nav()
         {
             var brands = db.Brands.Where(b => b.Active == true).Select(s => s).ToList();
             return PartialView(brands);
+        }
+        private string CartSession = "CartSession";
+
+        [ChildActionOnly]
+        public PartialViewResult _CartView()
+        {
+            var cart = Session[CartSession];
+            var list = new List<Cart>();
+            if (cart != null)
+            {
+                list = (List<Cart>)cart;
+            }
+            return PartialView(list);
         }
         public ActionResult Shop(string address)
         {
