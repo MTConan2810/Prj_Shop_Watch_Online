@@ -42,7 +42,7 @@
                             @Html.DisplayFor(model => item.Products.TenSp)
                         </td>
                         <td>@Html.DisplayFor(model => item.Products.Gia) VNĐ</td>
-                        <td><input type="text" id="quantity" name="quantity" value="@item.quantity" /></td>
+                        <td><input type="number" id="quantity" name="quantity" value="@item.quantity" min="1" max="100"/></td>
                         <td>khuyến mãi</td>
                         <td>Thành tiền</td>
                         <td>
