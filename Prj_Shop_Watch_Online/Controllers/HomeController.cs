@@ -120,6 +120,42 @@ namespace Prj_Shop_Watch_Online.Controllers
             return View(products);
         }
 
+        public PartialViewResult _Comments(int id, int? page)
+        {
+            List<Comments> comments = db.Comments.Where(s => s.ProductId == id).Select(s => s).ToList();
+            
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            return PartialView(comments.ToPagedList(pageNumber,pageSize));
+        }
+        //public ActionResult AddComments()
+        //{
+        //    return View();
+        //}
+        [HttpPost]
+        public async Task<ActionResult> AddComments(string tieude,string noidung,int productId)
+        {
+            Comments comments = new Comments();
+            if (Session["idUser"] != null)
+            { 
+                comments.Tieude = tieude;
+                comments.NoiDung = noidung;
+                comments.ProductId = productId;
+                comments.ThoiGian = DateTime.Now;
+                comments.UserId = (int)Session["idUser"];
+                if (ModelState.IsValid)
+                {
+                    db.Comments.Add(comments);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("ProductDetails");
+                }
+            }   
+            else
+            {
+                ViewBag.error = "Bạn phải đăng nhập để bình luận";
+            }
+            return View(comments);
+        }
 
 
 
@@ -133,17 +169,6 @@ namespace Prj_Shop_Watch_Online.Controllers
             var brands = db.Brands.Where(b => b.Active == true).Select(s => s).ToList();
             return PartialView(brands);
         }
-
-
-
-
-
-
-
-
-
-
-
         public ActionResult Shop(string address)
         {
             List<Shops> shops = new List<Shops>();

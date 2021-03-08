@@ -16,51 +16,72 @@ namespace Prj_Shop_Watch_Online.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Account
-        public async Task<ActionResult> Index()
-        {
-            return View(await db.Users.ToListAsync());
+        public ActionResult Register()
+        {            
+            return View();
         }
 
-        // GET: Account/Details/5
-        public async Task<ActionResult> Details(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
         {
-            if (id == null)
+            var tkcheck = db.Users.Where(tk => tk.Email == users.Email || tk.Username == users.Username);
+            if (tkcheck.Count() == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (ModelState.IsValid)
+                {
+                    
+                    db.Users.Add(users);
+                    await db.SaveChangesAsync();
+                }
+                return RedirectToAction("Register");
             }
-            Users users = await db.Users.FindAsync(id);
-            if (users == null)
+            else
             {
-                return HttpNotFound();
+                ViewBag.error = "Tài khoản đã tồn tại";
+                return View(users);
             }
-            return View(users);
         }
 
-        // GET: Account/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Login()
         {
             return View();
         }
 
-        // POST: Account/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
+        public ActionResult Login(string TenDangNhap, string MatKhau)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(users);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var user = db.Users.Where(u => u.Username.Equals(TenDangNhap) && u.Password.Equals(MatKhau)).ToList();
+                if (user.Count() > 0)
+                {
+                    //add session
+                    Session["HoTen"] = user.FirstOrDefault().FullName;
+                    Session["Email"] = user.FirstOrDefault().Email;
+                    Session["idUser"] = user.FirstOrDefault().Id;                                       
+                    return RedirectToAction("Index","Home");
+                }
+                else
+                {
+                    ViewBag.error = "Tài khoản hoặc mật khẩu sai! Vui lòng đăng nhập lại!!!!";
+                }
             }
-
-            return View(users);
+            return View();
         }
 
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
+        
+       
+
         // GET: Account/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> DoiPass(int? id)
         {
             if (id == null)
             {
@@ -79,7 +100,7 @@ namespace Prj_Shop_Watch_Online.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
+        public async Task<ActionResult> DoiPass([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
         {
             if (ModelState.IsValid)
             {
@@ -88,41 +109,6 @@ namespace Prj_Shop_Watch_Online.Controllers
                 return RedirectToAction("Index");
             }
             return View(users);
-        }
-
-        // GET: Account/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Users users = await db.Users.FindAsync(id);
-            if (users == null)
-            {
-                return HttpNotFound();
-            }
-            return View(users);
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Users users = await db.Users.FindAsync(id);
-            db.Users.Remove(users);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        }    
     }
 }
