@@ -180,6 +180,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\js-image-slider.js" />
     <Content Include="wwwroot\ImageBrands\800px-rado_uhrenmarke_logosvg_1500971861-min_1519293413.png" />
     <Content Include="wwwroot\ImageBrands\al_1476774643.png" />
     <Content Include="wwwroot\ImageBrands\ber_1476775793.png" />
@@ -307,6 +308,8 @@
     <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="wwwroot\Slideshow\bullet.png" />
+    <Content Include="wwwroot\Slideshow\loading.gif" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

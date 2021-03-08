@@ -1,7 +1,8 @@
-namespace Prj_Shop_Watch_Online.Models
+﻿namespace Prj_Shop_Watch_Online.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -15,8 +16,10 @@ namespace Prj_Shop_Watch_Online.Models
 
         public int ProductId { get; set; }
 
+        [DisplayName("Số lượng")]
         public int Quantity { get; set; }
 
+        [DisplayName("Giá")]
         public decimal Price { get; set; }
 
         public virtual Orders Orders { get; set; }
