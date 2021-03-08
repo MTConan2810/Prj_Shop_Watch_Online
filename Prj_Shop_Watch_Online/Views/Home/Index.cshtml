@@ -144,7 +144,7 @@
                     @if (item.SoLuong > 0)
                     {
                         <div class="add-to-cart">
-                            <a class="add-to-cart-btn" href="#"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
+                            <a class="add-to-cart-btn" href="@Url.Action("AddItem","Cart",new { quantity = 1, productId = item.Id })"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
                         </div>
                     }
                     else
