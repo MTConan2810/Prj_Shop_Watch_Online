@@ -1,7 +1,8 @@
-namespace Prj_Shop_Watch_Online.Models
+﻿namespace Prj_Shop_Watch_Online.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -11,14 +12,19 @@ namespace Prj_Shop_Watch_Online.Models
     {
         public int Id { get; set; }
 
+        [DisplayName("Mã ứng dụng")]
         public string AppCode { get; set; }
 
+        [DisplayName("Mã chức năng")]
         public string FunctionCode { get; set; }
 
+        [DisplayName("Mã quyền")]
         public string GroupCode { get; set; }
 
+        [DisplayName("Quyền xem")]
         public bool ViewRole { get; set; }
 
+        [DisplayName("Quyền cập nhật")]
         public bool UpdateRole { get; set; }
     }
 }

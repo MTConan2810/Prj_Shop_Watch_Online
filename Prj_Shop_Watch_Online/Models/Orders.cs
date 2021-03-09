@@ -1,7 +1,8 @@
-namespace Prj_Shop_Watch_Online.Models
+﻿namespace Prj_Shop_Watch_Online.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -16,18 +17,24 @@ namespace Prj_Shop_Watch_Online.Models
 
         public int Id { get; set; }
 
+        [DisplayName("Ngày đặt hành")]
         public DateTime? OrderDate { get; set; }
 
         public int? UserId { get; set; }
 
+        [DisplayName("Tên người nhận")]
         public string ShipName { get; set; }
 
+        [DisplayName("Địa chỉ nhận")]
         public string ShipAddress { get; set; }
 
+        [DisplayName("Email người nhận")]
         public string ShipEmail { get; set; }
 
+        [DisplayName("SĐT người nhận")]
         public string ShipPhoneNumber { get; set; }
 
+        [DisplayName("Xác nhận hoá đơn")]
         public bool Status { get; set; }
 
         public int PaymentId { get; set; }

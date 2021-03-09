@@ -23,7 +23,7 @@ namespace Prj_Shop_Watch_Online.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
+        public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Active")] Users users)
         {
             var tkcheck = db.Users.Where(tk => tk.Email == users.Email || tk.Username == users.Username);
             if (tkcheck.Count() == 0)

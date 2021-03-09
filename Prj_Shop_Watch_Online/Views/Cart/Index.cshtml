@@ -1,10 +1,30 @@
 ﻿@model List<Prj_Shop_Watch_Online.Models.Cart>
+@using Prj_Shop_Watch_Online.Models
 @{
     ViewBag.Title = "Giỏ hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    SWODBContext db = new SWODBContext();
+    var checkkm = from km in db.Promotions where (km.Status == true && km.FromDate <= DateTime.Now && km.ToDate >= DateTime.Now) select km;
+    var result = from obj in Model
+                 from km in checkkm.ToList()
+                 where obj.Products.Id == km.ProductId || obj.Products.BrandId == km.BrandId || km.ApplyForAll == true
+                 select obj;
+    Boolean checkQuyen(int code)
+    {
+        Boolean check = false;
+        foreach (var abc in result.ToList())
+        {
+            if (abc.Products.Id == code)
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
+
 }
 
-<div>
+<div class="row">
     <ol class="breadcrumb breadcrumb-instro">
         <li class="breadcrumb-item"><a href="/"><i class="fa fa-forward" aria-hidden="true"></i>Trang chủ</a></li>
         <li class="breadcrumb-item active">Giỏ hàng</li>
@@ -15,6 +35,7 @@
     {
         int stt = 1;
         decimal total = 0;
+        decimal? giakm = 0;
         <table class="table" style="margin:20px auto;">
             <thead>
                 <tr>
@@ -30,30 +51,85 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@(stt++)</td>
-                        <td>
-                            @{
-                                string ImagePath = "~/wwwroot/Images/" + item.Products.ProductImage.Select(s=>s.ImagePath);
+                    var anh = db.ProductImage.Where(s => s.ProductId == item.Products.Id).Select(s => s).ToList();
+                <tr>
+                    <td>@(stt++)</td>
+                    <td>
+                        @foreach (var obj in anh)
+                        {
+                            if (obj.IsDefault == true)
+                            {
+                                string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
+                                <img src="@Url.Content(ImagePath)" alt="@obj.Caption" width="70" height="100" title="@obj.Caption" />
                             }
-                            <img src="@Url.Content(ImagePath)" alt="" width="70" height="100" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Products.TenSp)
-                        </td>
-                        <td>@Html.DisplayFor(model => item.Products.Gia) VNĐ</td>
-                        <td><input type="number" id="quantity" name="quantity" value="@item.quantity" min="1" max="100"/></td>
-                        <td>khuyến mãi</td>
-                        <td>Thành tiền</td>
-                        <td>
-                            <button class="btn btn-success" name="productId"
-                                    data-ProductId="@item.Products.Id" id="btnUpdate">
-                                Cập nhật
-                            </button>
-                            <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
-                               class="btn btn-danger" id="btnXoa">Xóa</a>
-                        </td>
-                    </tr>
+
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Products.TenSp) @Html.DisplayFor(model => item.Products.MaSp)
+                    </td>
+                    <td>@String.Format("{0:C}", item.Products.Gia)</td>
+                    <td><input type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="100" /></td>
+                    @if (checkQuyen(item.Products.Id) == false)
+                    {
+                        giakm = item.Products.Gia * item.quantity;
+                        <td></td>
+                        <td>@String.Format("{0:C}", giakm)</td>
+                        total += (decimal)giakm;
+                    }
+                    @foreach (var km in checkkm)
+                    {
+
+                        if (km.ApplyForAll == true)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
+                                <td>@km.Name</td>
+                                <td>@String.Format("{0:C}", giakm)</td>
+                                total += (decimal)giakm;
+
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
+                                <td>@km.Name</td>
+                                <td>@String.Format("{0:C}", giakm)</td>
+                                total += (decimal)giakm;
+                            }
+
+                        }
+                        else if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100))*item.quantity;
+                                <td>@km.Name</td>
+                                <td>@String.Format("{0:C}", giakm)</td>
+                                total += (decimal)giakm;
+
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                giakm = (item.Products.Gia - (decimal)km.DiscountAmount)*item.quantity;
+                                <td>@km.Name</td>
+                                <td>@String.Format("{0:C}", giakm)</td>
+                                total += (decimal)giakm;
+
+                            }
+                        }
+
+                    }
+                    <td>
+                        <button class="btn btn-success btnUpdate" name="productId"
+                                data-ProductId="@item.Products.Id">
+                            Cập nhật
+                        </button>
+                        <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
+                           class="btn btn-danger" id="btnXoa">Xóa</a>
+                    </td>
+                </tr>
                 }
                 <tr>
                     <td colspan="6" class="text-right">Tổng tiền</td>
@@ -61,8 +137,95 @@
                     <td></td>
                 </tr>
             </tbody>
-        </table>
-        <a id="btnDathang" class="btn btn-primary" href="@Url.Action("PT_PayMent","Cart")">Đặt hàng</a>
+        </table>        
+        <div class="row clearfix">
+            <div class="col-md-5">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation" style="width:35%">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" style="width:100%;background-color: #337ab7;border-color: #2e6da4; color:white; font-weight:bold;">Đặt hàng</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false" style="width:100%">X</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        @using (Html.BeginForm("Check_Out", "Cart", FormMethod.Post))
+                        {
+                            <h3>Thông tin người đặt hàng</h3>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipname">Họ và tên</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipname" name="shipname" type="text" value="" required>                                  
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipphonenumber">Điện thoại</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipphonenumber" name="shipphonenumber" type="tel" value="" required>               
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipemail">Email</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipemail" name="shipemail" type="email" value="" required>         
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipaddress">Địa chỉ</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipaddress" name="shipaddress" type="text" value="" required>             
+                                </div>
+                            </div>
+                            <div>
+                                <label class="control-label col-md-3">Phương thức thanh toán</label>
+                                <div class="col-md-9">
+                                    <select class="form-control the-nhap" name="PaymentId" id="PaymentId">
+                                        <option value="">Phương thức thanh toán &nabla;</option>
+                                        @foreach(var pay in db.Payment)
+                                        {
+                                            <option value="@pay.Id">@pay.PayName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="GuiDH">Gửi đơn hàng</button>
+                            <script>
+                                var button = document.getElementById("GuiDH");
+                                button.onclick = function () {
+                                    alert("Đã gửi đơn hàng");
+                                }
+                            </script>
+                        }
+                        <a href="/" class="btn btn-danger offset-3" style="margin-top:15px;">Tiếp tục mua hàng</a>
+                    </div>
+                    <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $(".btnUpdate").click(function (event) {
+                        event.preventDefault();
+                        var productId = $(this).attr("data-productId");
+                        var quantity = $("#quantity-" + productId).val();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Cart/UpdateCart",
+                            data: {
+                                productId: productId,
+                                quantity: quantity
+                            },
+                            success: function (result) {
+                                window.location.href = "/Cart";
+                            }
+                        });
+                    });
+                });
+            </script>
+        }
     }
     else
     {
