@@ -82,7 +82,7 @@ namespace Prj_Shop_Watch_Online.Controllers
                 case "Khuyến mãi":
                     //var result = from obj in db.Products join km in db.Promotions on new { key1 = obj.Id, key2 = obj.BrandId }  equals new { key1 = km.ProductId, key2 = km.BrandId }
                     //             select obj;  
-                    var checkkm = from km in db.Promotions where km.Status == true select km;
+                    var checkkm = from km in db.Promotions where (km.Status == true && km.FromDate <= DateTime.Now && km.ToDate >= DateTime.Now) select km;
                     var result = from obj in products
                                  from km in checkkm.ToList()
                                  where obj.Id == km.ProductId || obj.BrandId == km.BrandId || km.ApplyForAll == true

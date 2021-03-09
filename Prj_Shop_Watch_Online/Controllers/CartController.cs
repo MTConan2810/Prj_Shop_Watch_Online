@@ -22,41 +22,48 @@ namespace Prj_Shop_Watch_Online.Controllers
             }
             return View(list);
         }
-        public ActionResult AddItem(int quantity, int productId)
+        public ActionResult AddItem(int productId)
         {
-            var sp = db.Products.Where(s => s.Id == productId).FirstOrDefault();
+            var product = db.Products
+                                   .Where(p => p.Id == productId)
+                                    .FirstOrDefault();
+            if (product == null)
+            {
+                return HttpNotFound("Không có sản phẩm");
+            }    
+            //add cart 
             var cart = Session[CartSession];
-            if (cart != null)
+            if(cart!= null)
             {
                 var list = (List<Cart>)cart;
-                if (list.Exists(x => x.Products.Id == sp.Id))
+                var cartItem = list.Find(p => p.Products.Id == productId);
+                if (cartItem !=null)
                 {
-                    foreach (var item in list)
-                    {
-                        item.quantity += quantity;
-                    }
+                    cartItem.quantity++;
                 }
                 else
                 {
                     var item = new Cart();
-                    item.Products = sp;
-                    item.quantity = quantity;
-                    list.Add(item);
+                    item.Products = product;
+                    item.quantity = 1;
+                    list.Add(item);                  
                 }
                 Session[CartSession] = list;
+                return RedirectToAction("Index", "Home");
+                
             }
             else
             {
                 var item = new Cart();
-                item.Products = sp;
-                item.quantity = quantity;
+                item.Products =product;
+                item.quantity = 1;
                 var list = new List<Cart>();
                 list.Add(item);
                 //gán vào session
                 Session[CartSession] = list;
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index", "Home");
+            
         }
 
         /*-----Update----*/

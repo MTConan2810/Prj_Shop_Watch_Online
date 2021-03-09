@@ -4,6 +4,23 @@
 @{
     ViewBag.Title = "Galle VN";
     SWODBContext db = new SWODBContext();
+    var checkkm = from km in db.Promotions where (km.Status == true && km.FromDate <= DateTime.Now && km.ToDate >= DateTime.Now) select km;
+    var result = from obj in Model
+                 from km in checkkm.ToList()
+                 where obj.Id == km.ProductId || obj.BrandId == km.BrandId || km.ApplyForAll == true
+                 select obj;
+    Boolean checkQuyen(int code)
+    {
+        Boolean check = false;
+        foreach (var abc in result.ToList())
+        {
+            if (abc.Id == code)
+            {
+                check = true;
+            }
+        }
+        return check;
+    }
 }
 
 <div>
@@ -70,26 +87,6 @@
     </form>
     }
 </div>
-@{ 
-    var checkkm = from km in db.Promotions where km.Status == true select km;
-    var result = from obj in Model
-                 from km in checkkm.ToList()
-                 where obj.Id == km.ProductId || obj.BrandId == km.BrandId || km.ApplyForAll == true
-                 orderby obj.TenSp
-                 select obj;
-    Boolean checkQuyen(int code)
-    {
-        Boolean check = false;
-        foreach (var abc in result.ToList())
-        {
-            if (abc.Id == code)
-            {
-                check = true;
-            }
-        }
-        return check;
-    }
-}
 @if (Model.Count > 0)
 {
     <div class="row row-cols-4 row-cols-md-4 g-4 clearfix">
@@ -159,7 +156,7 @@
                     @if (item.SoLuong > 0)
                     {
                         <div class="add-to-cart">
-                            <a class="add-to-cart-btn" href="@Url.Action("AddItem","Cart",new { quantity = 1, productId = item.Id })"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
+                            <a class="add-to-cart-btn" href="@Url.Action("AddItem","Cart",new {productId = item.Id })"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</a>
                         </div>
                     }
                     else
