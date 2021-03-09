@@ -13,7 +13,7 @@ namespace Prj_Shop_Watch_Online.Controllers
         private static string CartSession = "CartSession";
         // GET: Cart
         public ActionResult Index()
-        {
+        {          
             var cart = Session[CartSession];
             var list = new List<Cart>();
             if (cart != null)
@@ -104,31 +104,93 @@ namespace Prj_Shop_Watch_Online.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult PT_PayMent()
-        {
-            List<string> htttoan = new List<string>
-            {
-                "Tiền mặt","Thẻ"
-            };
-            ViewBag.hthuc = htttoan;
-            return View();
-        }
-
         // POST: Admin/DonHangs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult PT_PayMent(string hoten, string diachi, string email, string sdt, string ghichu, string hinhthucpay)
+        public ActionResult Check_Out(string shipname, string shipaddress, string shipemail,string shipphonenumber, int PaymentId)
         {
             var cart = Session[CartSession];
             var list = (List<Cart>)cart;
+            //create Order
+            Orders orders = new Orders();
+            orders.OrderDate = DateTime.Now;
+            orders.PaymentId = PaymentId;
+            orders.ShipName = shipname;
+            orders.ShipAddress = shipaddress;
+            orders.ShipEmail = shipemail;
+            orders.ShipPhoneNumber = shipphonenumber;
+            if(Session["idUser"]!=null)
+            {
+                orders.UserId = (int)Session["idUser"];
+            }               
+            orders.Status = false;
+            var orderId = new OrderDAO().Them(orders);
+            //create orderdetails
+            try
+            {
+                var checkkm = from km in db.Promotions where (km.Status == true && km.FromDate <= DateTime.Now && km.ToDate >= DateTime.Now) select km;
+                var result = from obj in list
+                             from km in checkkm.ToList()
+                             where obj.Products.Id == km.ProductId || obj.Products.BrandId == km.BrandId || km.ApplyForAll == true
+                             select obj;
+                Boolean checkQuyen(int code)
+                {
+                    Boolean check = false;
+                    foreach (var abc in result.ToList())
+                    {
+                        if (abc.Products.Id == code)
+                        {
+                            check = true;
+                        }
+                    }
+                    return check;
+                }
+                var orderDetailsADD = new OrderDetailsDAO();
+                foreach (var item in list)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = (int)orderId;
+                    orderDetail.ProductId = item.Products.Id;
+                    orderDetail.Quantity = item.quantity;
+                    if(checkQuyen(item.Products.Id)==false)
+                    {
+                        orderDetail.Price = (decimal)item.Products.Gia;
+                    }
+                    foreach (var km in checkkm)
+                    {
+                        if (km.ApplyForAll == true)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
+                            }    
+                        }
+                        else if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
+                        {
+                            if (km.DiscountPercent != null)
+                            {
+                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
+                            }
+                            else if (km.DiscountAmount != null)
+                            {
+                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
+                            }
+                        }    
+                    }    
+                    orderDetailsADD.Them(orderDetail);
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewBag.error = "Không thành công" + ex.ToString();
+            }
 
-            return Redirect("Success");
-        }
-
-        public ActionResult Success()
-        {
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

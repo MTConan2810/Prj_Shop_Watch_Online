@@ -154,6 +154,8 @@
     <Compile Include="Models\AppList.cs" />
     <Compile Include="Models\Brands.cs" />
     <Compile Include="Models\Comments.cs" />
+    <Compile Include="Models\DAO\OrderDAO.cs" />
+    <Compile Include="Models\DAO\OrderDetailsDAO.cs" />
     <Compile Include="Models\model_session\Cart.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Orders.cs" />

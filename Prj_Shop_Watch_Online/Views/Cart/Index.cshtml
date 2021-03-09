@@ -150,7 +150,54 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        chỗ điền thôn tin đặt hàng
+                        @using (Html.BeginForm("Check_Out", "Cart", FormMethod.Post))
+                        {
+                            <h3>Thông tin người đặt hàng</h3>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipname">Họ và tên</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipname" name="shipname" type="text" value="" required>                                  
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipphonenumber">Điện thoại</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipphonenumber" name="shipphonenumber" type="tel" value="" required>               
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipemail">Email</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipemail" name="shipemail" type="email" value="" required>         
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="shipaddress">Địa chỉ</label>
+                                <div class="col-md-9">
+                                    <input class="form-control the-nhap text-box single-line" id="shipaddress" name="shipaddress" type="text" value="" required>             
+                                </div>
+                            </div>
+                            <div>
+                                <label class="control-label col-md-3">Phương thức thanh toán</label>
+                                <div class="col-md-9">
+                                    <select class="form-control the-nhap" name="PaymentId" id="PaymentId">
+                                        <option value="">Phương thức thanh toán &nabla;</option>
+                                        @foreach(var pay in db.Payment)
+                                        {
+                                            <option value="@pay.Id">@pay.PayName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="GuiDH">Gửi đơn hàng</button>
+                            <script>
+                                var button = document.getElementById("GuiDH");
+                                button.onclick = function () {
+                                    alert("Đã gửi đơn hàng");
+                                }
+                            </script>
+                        }
+                        <a href="/" class="btn btn-danger offset-3" style="margin-top:15px;">Tiếp tục mua hàng</a>
                     </div>
                     <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">                      
                     </div>
