@@ -147,14 +147,15 @@ namespace Prj_Shop_Watch_Online.Controllers
                 {
                     db.Comments.Add(comments);
                     await db.SaveChangesAsync();
-                    return RedirectToAction("ProductDetails");
+                    return RedirectToAction("ProductDetails","Home",new { id = productId});
                 }
             }   
             else
             {
                 ViewBag.error = "Bạn phải đăng nhập để bình luận";
+                return RedirectToAction("Login","Account");
             }
-            return View(comments);
+            return RedirectToAction("ProductDetails", "Home", new { id = productId });
         }
 
         public PartialViewResult _Nav()

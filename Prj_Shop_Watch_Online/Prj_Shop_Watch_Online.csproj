@@ -136,7 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1975,6 +1975,7 @@
     <Content Include="wwwroot\ImageShop\vincom-da-nang-2_1562120114.jpg" />
     <Content Include="wwwroot\ImageShop\vincom-thu-duc-min_1554261743.jpg" />
     <Content Include="wwwroot\Logo-Banner\227x334_1600851082.jpg" />
+    <Content Include="wwwroot\Logo-Banner\46944607_2551417648209414_8634067210622468096_o.png" />
     <Content Include="wwwroot\Logo-Banner\banner-galle-1_1612509086.jpg" />
     <Content Include="wwwroot\Logo-Banner\banner-gallevn_1611799014.jpg" />
     <Content Include="wwwroot\Logo-Banner\banner-highlife-galle_1605510737.jpg" />
@@ -1983,17 +1984,12 @@
     <Content Include="wwwroot\Logo-Banner\galle_1604975660.jpg" />
     <Content Include="wwwroot\Logo-Banner\menu_06.png" />
     <Content Include="wwwroot\Logo-Banner\vang_1519616094.png" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
-    <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
     <Content Include="wwwroot\Slideshow\bullet.png" />
     <Content Include="wwwroot\Slideshow\loading.gif" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Asset\scss\navs\_global.scss" />
     <Content Include="Areas\Admin\Asset\scss\navs\_sidebar.scss" />
     <Content Include="Areas\Admin\Asset\scss\navs\_topbar.scss" />
@@ -2166,6 +2162,11 @@
     <Content Include="Areas\Admin\Asset\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Asset\vendor\jquery\jquery.min.map" />
     <Content Include="Areas\Admin\Asset\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2198,6 +2199,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\_CartView.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Home\_Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

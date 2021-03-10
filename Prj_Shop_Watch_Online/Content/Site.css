@@ -14,14 +14,12 @@
 }
 
 .searchInput {
-     /*max-width: 800px;
-    width: 400px;*/
     border: 1px solid #ffffff54;
     color: #ffffff;
     font-size: 13px;
     height: 40px;
     line-height: 40px;
-    margin: 0;
+    margin: 10px 10px 0 -10px;
     padding: 5px 30px 5px 10px;
     width: 100%;
     box-sizing: border-box;
@@ -45,8 +43,8 @@
     background: transparent;
     border: none;
     position: absolute;
-    right: 15px;
-    top: 9px;
+    right: 26px;
+    top: 18px;
 }
 
 #number-cart {
@@ -61,7 +59,7 @@
 }
 
 #subheader {
-    margin-top: -40px;
+    margin-top: -30px;
     font-size: 14px;
     font-family: 'UTM French Vanilla';
     height: 44px;
@@ -390,15 +388,25 @@ button span.fa-angle-up {
 }
 /*register*/
 /*login*/
+#login-page {
+    background-color: #4e73df;
+    background-image: linear-gradient( 180deg,#4e73df 10%,#224abe 100%);
+    background-size: cover;
+}
+.bg-login-image-page {
+    background: url('../wwwroot/Logo-Banner/46944607_2551417648209414_8634067210622468096_o.png');
+    background-position: center;
+    background-size: cover;
+}
 .input {
-    width: 35%;
-    height: 37px;    
-    border: 1px solid #b3b3b3;
-    outline: none;
-    padding-left: 15px;
-    border-radius: 10px;
-    margin: auto;
-    margin-bottom: 10px;
+    font-size: 14px;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+.btn-user {
+    font-size: 14px;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
 }
 .readall {
     transition: all .2s linear;

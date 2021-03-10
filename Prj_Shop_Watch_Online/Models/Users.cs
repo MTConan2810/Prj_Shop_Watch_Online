@@ -21,7 +21,9 @@
         [DisplayName("Tên tài khoản")]
         public string Username { get; set; }
 
-        [DisplayName("Mật khẩu")]
+        [DisplayName("Mật khẩu"), DataType(DataType.Password)]
+        [Required]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Tối thiểu 3 kí tự,Tối đa 20 kí tự")]
         public string Password { get; set; }
 
         [DisplayName("Họ và tên")]

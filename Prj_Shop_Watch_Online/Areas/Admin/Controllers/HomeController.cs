@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Shop_Watch_Online.Areas.Admin.Controllers
+namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,0 +1,23 @@
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Comments>
+@using PagedList.Mvc;
+
+
+<div>
+    @foreach (var item in Model)
+    {
+        <hr />
+        <h3><i class="fas fa-user"></i>&nbsp; @Html.DisplayFor(model => item.Users.FullName)</h3>
+        <h4>
+            <i class="far fa-flag"></i>&nbsp; @Html.DisplayFor(model => item.Tieude) &nbsp;
+            <small>@Html.DisplayFor(model => item.ThoiGian)</small>
+        </h4>
+        <p><i class="far fa-comment"></i>&nbsp; @Html.DisplayFor(model => item.NoiDung)</p>
+        <hr />
+    }
+    <div class="text-center">
+        <br />
+        Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("_Comments", new { page }))
+    </div>
+    
+</div>
