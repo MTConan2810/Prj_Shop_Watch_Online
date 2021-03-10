@@ -62,12 +62,12 @@ namespace Prj_Shop_Watch_Online.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.Where(u => u.Username.Equals(Username) && u.Password.Equals(Password)).ToList();
+                var user = db.Users.Where(u => u.Username.ToUpper().Equals(Username.ToUpper()) && u.Password.Equals(Password)).ToList();
                 if (user.Count() > 0)
                 {
                     //add session
-                    Session["HoTen"] = user.FirstOrDefault().FullName;
-                    Session["Email"] = user.FirstOrDefault().Email;
+                    Session["HoTenUI"] = user.FirstOrDefault().FullName;
+                    Session["EmailUI"] = user.FirstOrDefault().Email;
                     Session["idUser"] = user.FirstOrDefault().Id;
                     if(user.FirstOrDefault().Active == true)
                     {

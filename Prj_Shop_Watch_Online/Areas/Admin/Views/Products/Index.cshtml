@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Brands.TenTH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaSp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenSp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioiTinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiDH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KieuDH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoChiuNuoc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChucNang)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DuongKinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiMay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MauMat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MatKinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MoTa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoLuong)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brands.TenTH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaSp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenSp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioiTinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KieuDH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoChiuNuoc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChucNang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DuongKinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiMay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MauMat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MatKinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MoTa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoLuong)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

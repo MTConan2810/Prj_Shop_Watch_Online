@@ -1,0 +1,73 @@
+﻿@model Prj_Shop_Watch_Online.Models.AppList
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>AppList</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApiDomain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApiDomain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebDomain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebDomain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoLoginUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoLoginUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

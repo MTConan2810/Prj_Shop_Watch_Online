@@ -152,7 +152,7 @@ namespace Prj_Shop_Watch_Online.Controllers
             }   
             else
             {
-                ViewBag.error = "Bạn phải đăng nhập để bình luận";
+                //ViewBag.error = "Bạn phải đăng nhập để bình luận";
                 return RedirectToAction("Login","Account");
             }
             return RedirectToAction("ProductDetails", "Home", new { id = productId });
