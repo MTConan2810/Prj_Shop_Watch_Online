@@ -1,19 +1,31 @@
 ﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Products>
-
+@using Prj_Shop_Watch_Online.Models;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    SWODBContext db = new SWODBContext();
 }
 
-<h2>Index</h2>
+<h2>Sản phẩm</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="text-right">
+    <a href="@Url.Action("Create","Products")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+</div>
+<div class="row" style="margin:5px auto 20px;">
+    @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+    {
+        <input id="keyword" name="keyword" placeholder="Tìm thương hiệu" style="height:38px;border:1px solid blue; border-radius:8px;" />
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+    }
+
+</div>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Brands.TenTH)
+        </th>
+        <th>
+            Ảnh Sản phẩm
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MaSp)
@@ -34,97 +46,56 @@
             @Html.DisplayNameFor(model => model.KieuDH)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DoChiuNuoc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChucNang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoaiDay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DuongKinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoaiMay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MauMat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MatKinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.SoLuong)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brands.TenTH)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaSp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenSp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GioiTinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiDH)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KieuDH)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoChiuNuoc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChucNang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiDay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DuongKinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LoaiMay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MauMat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MatKinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MoTa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoLuong)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        var anh = db.ProductImage.Where(s => s.ProductId == item.Id).Select(s => s).ToList();
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brands.TenTH)
+            </td>
+            <td>
+                @foreach (var obj in anh)
+                {
+                    if (obj.IsDefault == true)
+                    {
+                        string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
+                        <img src="@Url.Content(ImagePath)" class="img img-thumbnail" width="200" height="400" alt="@obj.Caption" title="@obj.Caption" />
+                    }
+
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSp)
+            </td>
+            <td>
+                @String.Format("{0:C}", item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GioiTinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KieuDH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id }) |
+                <a href="@Url.Action("Edit","Products", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                <a href="@Url.Action("Xoá","Product", new { id = item.Id })" title="Xoá"><i class="far fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

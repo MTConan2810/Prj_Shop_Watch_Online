@@ -1,58 +1,117 @@
-﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Shops>
-
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Shops>
+@using PagedList.Mvc
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Showroom";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int stt = 1;
 }
 
-<h2>Index</h2>
+<h1 class="h3 mb-2 text-gray-800">Showroom</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="text-right">
+            <a href="@Url.Action("Create","Shops")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+        </div>
+        <div>
+            @using (Html.BeginForm("Index", "Shops", FormMethod.Get))
+            {
+                <input id="keyword" name="keyword" placeholder="Tìm theo địa chỉ" style="height:38px;border:1px solid blue; border-radius:8px;" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <div style="margin-top:10px; margin-bottom:-5px;">
+                    <label for="pagesize">
+                        Hiển thị
+                        @Html.DropDownList("pagesize", null, "10", new { @style="border: 1px solid blue; border-radius:8px;" ,@onchange = "this.form.submit();" })
+                        Showroom
+                    </label>
+                </div>                
+            }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChiNhanh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DienThoai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageShop)
-        </th>
-        <th></th>
-    </tr>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Ảnh Showroom
+                        </th>
+                        <th>
+                            Chi nhánh
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChiNhanh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DienThoai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageShop)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                        <th>
+                            Điện Thoại
+                        </th>
+                        <th>
+                            Mail
+                        </th>
 
-</table>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(stt++)
+                            </td>
+                            <td>
+                                @{
+                                    string ImagePath = "~/wwwroot/ImageShop/" + item.ImageShop;
+                                }
+                                <img src="@Url.Content(ImagePath)" class="img img-thumbnail" width="400" height="700" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ChiNhanh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DienThoai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mail)
+                            </td>
+
+                            <td style="width:70px;">
+                                <a href="@Url.Action("Edit","Shops", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Shops", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-md-4 offset-8 text-right">
+                Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Shops", new { page, pagesize = ViewBag.pagesizenow }))
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Prj_Shop_Watch_Online.Models;
+using System.IO;
+using PagedList;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
@@ -16,9 +18,23 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Admin/Shops
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string keyword, int? page, int? pagesize)
         {
-            return View(await db.Shops.ToListAsync());
+            List<Shops> shops = db.Shops.Select(s=>s).ToList();
+            List<int> pagecout = new List<int> { 5,20,25,50 };
+            ViewBag.pagesize = new SelectList(pagecout);
+            ViewBag.pagesizenow = pagesize;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+
+                shops = shops.Where(obj =>
+                                    obj.Address.ToUpper().Contains(keyword.ToUpper())
+                                    ).Select(s => s).ToList();
+
+            }
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+            return View(shops.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Shops/Details/5
@@ -51,6 +67,15 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                shops.ImageShop = "";
+                var f = Request.Files["ImageFile"];
+                if (f != null && f.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(f.FileName);
+                    string UpLoadFile = Server.MapPath("~/wwwroot/ImageShop/") + FileName;
+                    f.SaveAs(UpLoadFile);
+                    shops.ImageShop = FileName;
+                }
                 db.Shops.Add(shops);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -83,6 +108,14 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var f = Request.Files["ImageFile"];
+                if (f != null && f.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(f.FileName);
+                    string UpLoadFile = Server.MapPath("~/wwwroot/ImageShop/") + FileName;
+                    f.SaveAs(UpLoadFile);
+                    shops.ImageShop = FileName;
+                }
                 db.Entry(shops).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -91,24 +124,22 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         }
 
         // GET: Admin/Shops/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shops shops = await db.Shops.FindAsync(id);
-            if (shops == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shops);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Shops shops = await db.Shops.FindAsync(id);
+        //    if (shops == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(shops);
+        //}
 
         // POST: Admin/Shops/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             Shops shops = await db.Shops.FindAsync(id);
             db.Shops.Remove(shops);

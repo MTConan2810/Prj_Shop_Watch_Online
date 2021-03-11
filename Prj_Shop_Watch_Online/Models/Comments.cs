@@ -17,7 +17,7 @@
         [DisplayName("Nội dung")]
         public string NoiDung { get; set; }
 
-        [DisplayName("Thời gian bình luận")]
+        [DisplayName("Thời gian bình luận"), DataType(DataType.Date)]
         public DateTime? ThoiGian { get; set; }
 
         public int UserId { get; set; }

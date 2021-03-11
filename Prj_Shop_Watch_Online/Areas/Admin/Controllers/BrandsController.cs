@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Prj_Shop_Watch_Online.Models;
+using System.IO;
+using PagedList;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
@@ -16,9 +18,23 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Admin/Brands
-        public async Task<ActionResult> Index()
-        {
-            return View(await db.Brands.ToListAsync());
+        public ActionResult Index(string keyword, int? page, int? pagesize )
+        {           
+            List<Brands> brands =  db.Brands.Select(s => s).ToList();
+            List<int> pagecout = new List<int> { 5, 20, 25, 50 };
+            ViewBag.pagesize = new SelectList(pagecout);
+            ViewBag.pagesizenow = pagesize;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                
+                brands = brands.Where(obj =>
+                                       obj.TenTH.ToUpper().Contains(keyword.ToUpper())
+                                       ).Select(s => s).ToList();
+
+            }
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+            return View(brands.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Brands/Details/5
@@ -51,6 +67,15 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                brands.AnhTH = "";
+                var f = Request.Files["ImageFile"];
+                if (f != null && f.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(f.FileName);
+                    string UpLoadFile = Server.MapPath("~/wwwroot/ImageBrands/") + FileName;
+                    f.SaveAs(UpLoadFile);
+                    brands.AnhTH = FileName;
+                }
                 db.Brands.Add(brands);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -83,6 +108,14 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var f = Request.Files["ImageFile"];
+                if (f != null && f.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(f.FileName);
+                    string UpLoadFile = Server.MapPath("~/wwwroot/ImageShop/") + FileName;
+                    f.SaveAs(UpLoadFile);
+                    brands.AnhTH = FileName;
+                }
                 db.Entry(brands).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

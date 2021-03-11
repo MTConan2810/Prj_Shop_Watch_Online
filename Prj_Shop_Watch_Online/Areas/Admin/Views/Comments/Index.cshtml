@@ -1,15 +1,19 @@
 ﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Comments>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bình luận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Bình luận</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="text-right">
+    <a href="@Url.Action("Create","Comments")">Tạo mới</a>
+</div>
+<div class="row">
+    <input id="keyword" name="keyword" placeholder="Tìm theo tên" />
+    <button type="submit">tìm</button>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -30,29 +34,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Products.MaSp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tieude)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoiDung)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiGian)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.MaSp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Users.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tieude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiDung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGian)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

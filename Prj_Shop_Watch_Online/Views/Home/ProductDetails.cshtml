@@ -61,16 +61,7 @@
                             </div>
                         }
                     }
-                }
-                @*<div class="carousel-item active">
-                    <img src="~/wwwroot/Logo-Banner/banner-galle-1_1612509086.jpg" class="d-block w-100" height="350" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="~/wwwroot/Logo-Banner/banner-gallevn_1611799014.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="~/wwwroot/Logo-Banner/banner-highlife-galle_1605510737.jpg" class="d-block w-100" alt="...">
-                </div>*@
+                }               
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -170,7 +161,7 @@
                 if (abc.Products.BrandId == Model.BrandId && abc.IsDefault == true && abc.ProductId != Model.Id)
                 {
                     string ImagePath = "~/wwwroot/ImageProducts/" + abc.ImagePath;
-                    <a href="@Url.Action("ProductDetails","Home", new { id = abc.ProductId})"><img src="@Url.Content(ImagePath)" class="img-thumbnail" width="100" height="100" title="Đồng hồ @abc.Products.TenSp @abc.Products.MaSp" style="float:left"/></a>
+                    <a href="@Url.Action("ProductDetails","Home", new { id = abc.ProductId})"><img src="@Url.Content(ImagePath)" class="img-thumbnail" width="100" height="100" title="Đồng hồ @abc.Products.TenSp @abc.Products.MaSp" style="float:left;margin-right:10px; border:1px solid red;"/></a>
                 }
             }
         </div>

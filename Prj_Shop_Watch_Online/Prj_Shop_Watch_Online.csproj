@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Asset\css\PagedList.css" />
     <Content Include="Areas\Admin\Asset\css\sb-admin-2.css" />
     <Content Include="Areas\Admin\Asset\css\sb-admin-2.min.css" />
     <Content Include="Areas\Admin\Asset\img\undraw_posting_photo.svg" />
@@ -1992,6 +1993,7 @@
     <Content Include="wwwroot\Logo-Banner\galle_1604975660.jpg" />
     <Content Include="wwwroot\Logo-Banner\menu_06.png" />
     <Content Include="wwwroot\Logo-Banner\vang_1519616094.png" />
+    <Content Include="wwwroot\no-image-news.png" />
     <Content Include="wwwroot\Slideshow\bullet.png" />
     <Content Include="wwwroot\Slideshow\loading.gif" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -2191,7 +2193,6 @@
     <Content Include="Areas\Admin\Views\Brands\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brands\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Shops\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\Index.cshtml" />
