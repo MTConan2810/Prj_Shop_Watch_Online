@@ -12,9 +12,11 @@
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage ="Mã ứng dụng không được để trống!")]
         [DisplayName("Mã ứng dụng")]
         public string AppCode { get; set; }
 
+        [Required(ErrorMessage = "Tên ứng dụng không được để trống!")]
         [DisplayName("Tên ứng dụng")]
         public string AppName { get; set; }
 

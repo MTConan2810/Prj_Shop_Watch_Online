@@ -19,12 +19,15 @@
 
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Mã sản phẩm không được để trống")]
         [DisplayName("Mã Sản phẩm")]
         public string MaSp { get; set; }
 
+        [Required(ErrorMessage = "Tên sản phẩm không được để trống")]
         [DisplayName("Tên sản phẩm")]
         public string TenSp { get; set; }
 
+        [Required(ErrorMessage = "Giá không được để trống")]
         [DisplayName("Giá")]
         public decimal? Gia { get; set; }
 
@@ -66,6 +69,7 @@
 
         public int BrandId { get; set; }
 
+        [Required(ErrorMessage = "Số lượng không được để trống")]
         [DisplayName("Số lượng")]
         public int? SoLuong { get; set; }
 

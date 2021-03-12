@@ -17,6 +17,7 @@
 
         public int Id { get; set; }
 
+        [Required(ErrorMessage ="Tên thương hiệu không được để trống!")]
         [DisplayName("Thương hiệu")]
         public string TenTH { get; set; }
 

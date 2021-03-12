@@ -1,155 +1,196 @@
 ﻿@model Prj_Shop_Watch_Online.Models.Products
-
+@using Prj_Shop_Watch_Online.Models
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    SWODBContext db = new SWODBContext();
+    var ListImage = db.ProductImage.Where(s => s.ProductId == Model.Id).Select(s => s).ToList();
 }
 
-<h2>Details</h2>
+<h1 class="h3 mb-2 text-gray-800">Sản phẩm</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Chi tiết</h2>
+        <p>Sản phẩm @Model.MaSp</p>
+    </div>
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-md-4">
+                <h4>Ảnh</h4>
+                <hr />
+                <div class="row">
+                    @foreach (var item in ListImage)
+                    {
+                        string ImagePath = "~/wwwroot/ImageProducts/" + item.ImagePath;
+                        if (item.IsDefault == true)
+                        {
+                            <div class="col-md-10" style="margin-bottom: 20px;">
+                                <img src="@Url.Content(ImagePath)" class="img-thumbnail w-100" height="350" alt="..." style="border:1px solid blue;">
+                            </div>                          
+                        }
+                        else
+                        {                         
+                            <div class="col-md-4">
+                                <img src="@Url.Content(ImagePath)" class="img-thumbnail w-100" height="200" style="border:1px solid blue;" alt="...">
+                            </div>
+                            
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h4>Thông tin sản phẩm</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Brands.TenTH)
+                        </dt>
 
-<div>
-    <h4>Products</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Brands.TenTH)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Brands.TenTH)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Brands.TenTH)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.MaSp)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MaSp)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.MaSp)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.MaSp)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TenSp)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TenSp)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TenSp)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenSp)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Gia)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gia)
-        </dt>
+                        <dd>
+                            @String.Format("{0:C}", Model.Gia)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gia)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GioiTinh)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GioiTinh)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.GioiTinh)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.GioiTinh)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.LoaiDH)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiDH)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.LoaiDH)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LoaiDH)
-        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.KieuDH)
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.KieuDH)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.KieuDH)
+                        </dd>                        
+                    </dl>
+                    <h4>Tính năng</h4>
+                    <hr/>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DoChiuNuoc)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.KieuDH)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.DoChiuNuoc) atm
+                        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DoChiuNuoc)
-        </dt>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ChucNang)
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DoChiuNuoc)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.ChucNang)
+                        </dd>                      
+                    </dl>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h4>Vỏ & Dây</h4>
+                <hr/>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Vo)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ChucNang)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Vo)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ChucNang)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LoaiDay)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Vo)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LoaiDay)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DuongKinh)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vo)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.DuongKinh)mm
+                    </dd>
+                </dl>
+                <h4>Thông tin bổ sung</h4>
+                <hr/>
+                <dl class="dl-horizontal">                   
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LoaiMay)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiDay)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LoaiMay)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LoaiDay)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MauMat)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DuongKinh)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MauMat)
+                    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DuongKinh)
-        </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MatKinh)
+                    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiMay)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MatKinh)
+                    </dd>             
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SoLuong)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LoaiMay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MauMat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MauMat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MatKinh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MatKinh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
-
-    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.SoLuong)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-8 offset-4">
+                <h4>Mô tả</h4>
+                <hr/>
+                @Html.DisplayFor(model=>model.MoTa)
+            </div>
+            <p>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Quay lại", "Index")
+            </p>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

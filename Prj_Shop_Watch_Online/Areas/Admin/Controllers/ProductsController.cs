@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Prj_Shop_Watch_Online.Models;
+using PagedList;
+using System.IO;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
@@ -16,10 +18,29 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Admin/Products
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string keyword,int? brandId, int? page, int? pagesize)
         {
-            var products = db.Products.Include(p => p.Brands);
-            return View(await products.ToListAsync());
+            List<Products> products = db.Products.Select(s => s).ToList();
+            List<int> pagecout = new List<int> { 5, 20, 25, 50 };
+            ViewBag.pagesize = new SelectList(pagecout);
+            ViewBag.pagesizenow = pagesize;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+
+                products = products.Where(obj =>
+                                       obj.MaSp.ToUpper().Contains(keyword.ToUpper())
+                                       ).Select(s => s).ToList();
+
+            }
+            if (brandId != null)
+            {
+                products = products.Where(obj =>
+                                       obj.BrandId.Equals(brandId)
+                                       ).Select(s => s).ToList();
+            }    
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Products/Details/5
@@ -55,7 +76,7 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             {
                 db.Products.Add(products);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = products.Id });
             }
 
             ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", products.BrandId);
@@ -94,29 +115,69 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", products.BrandId);
             return View(products);
         }
-
-        // GET: Admin/Products/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        //ImageProduct
+        [HttpPost]
+        public async Task<ActionResult> AddImage(int productId, string caption, bool isDefault)
         {
-            if (id == null)
+            ProductImage productImage = new ProductImage();
+            productImage.ProductId = productId;
+            productImage.Caption = caption;
+            productImage.IsDefault = isDefault;
+            productImage.DateCreated = DateTime.Now;
+            productImage.ImagePath = "";
+            var f = Request.Files["ImageFile"];
+            if (f != null && f.ContentLength > 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                string FileName = Path.GetFileName(f.FileName);
+                string UpLoadFile = Server.MapPath("~/wwwroot/ImageProducts/") + FileName;
+                f.SaveAs(UpLoadFile);
+                productImage.ImagePath = FileName;
             }
-            Products products = await db.Products.FindAsync(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
+            db.ProductImage.Add(productImage);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Edit", new { id = productId });
+        }
+        public async Task<ActionResult> DeleteImage(int id, int productId)
+        {
+            ProductImage productImage = await db.ProductImage.FindAsync(id);
+            db.ProductImage.Remove(productImage);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Edit", new { id = productId });
         }
 
-        // POST: Admin/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+
+
+
+
+        // GET: Admin/Products/Delete/5
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Products products = await db.Products.FindAsync(id);
+        //    if (products == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(products);
+        //}
+
+        //// POST: Admin/Products/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
         {
             Products products = await db.Products.FindAsync(id);
             db.Products.Remove(products);
+            foreach (var obj in db.ProductImage)
+            {
+                if (obj.ProductId == id)
+                {
+                    db.ProductImage.Remove(obj);
+                }
+            }
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

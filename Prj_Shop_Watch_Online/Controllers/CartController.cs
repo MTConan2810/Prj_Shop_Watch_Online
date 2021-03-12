@@ -134,6 +134,7 @@ namespace Prj_Shop_Watch_Online.Controllers
                              from km in checkkm.ToList()
                              where obj.Products.Id == km.ProductId || obj.Products.BrandId == km.BrandId || km.ApplyForAll == true
                              select obj;
+                var kmapplyforall = db.Promotions.Where(km => km.ApplyForAll == true).ToList();
                 Boolean checkQuyen(int code)
                 {
                     Boolean check = false;
@@ -157,31 +158,41 @@ namespace Prj_Shop_Watch_Online.Controllers
                     {
                         orderDetail.Price = (decimal)item.Products.Gia;
                     }
-                    foreach (var km in checkkm)
+                    if(kmapplyforall.Count > 0)
                     {
-                        if (km.ApplyForAll == true)
+                        foreach (var km in checkkm)
                         {
-                            if (km.DiscountPercent != null)
+                            if (km.ApplyForAll == true)
                             {
-                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
-                            }
-                            else if (km.DiscountAmount != null)
-                            {
-                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
-                            }    
+                                if (km.DiscountPercent != null)
+                                {
+                                    orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
+                                }
+                                else if (km.DiscountAmount != null)
+                                {
+                                    orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
+                                }
+                            }                           
                         }
-                        else if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
+                    }
+                    else
+                    {
+                        foreach (var km in checkkm)
                         {
-                            if (km.DiscountPercent != null)
+                            if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
                             {
-                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
+                                if (km.DiscountPercent != null)
+                                {
+                                    orderDetail.Price = (decimal)((item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity);
+                                }
+                                else if (km.DiscountAmount != null)
+                                {
+                                    orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
+                                }
                             }
-                            else if (km.DiscountAmount != null)
-                            {
-                                orderDetail.Price = (decimal)((item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity);
-                            }
-                        }    
-                    }    
+                        }
+                    }
+                    
                     orderDetailsADD.Them(orderDetail);
                 }
             }

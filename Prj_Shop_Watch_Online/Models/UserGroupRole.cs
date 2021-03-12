@@ -13,6 +13,7 @@
         public int Id { get; set; }
 
         [DisplayName("Tên tài khoản")]
+        [Required(ErrorMessage = "Tên tài khoản không được để trống!")]
         public string Username { get; set; }
 
         [DisplayName("Mã ứng dụng")]

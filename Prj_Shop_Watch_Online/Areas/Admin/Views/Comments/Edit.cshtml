@@ -1,0 +1,80 @@
+﻿@model Prj_Shop_Watch_Online.Models.Comments
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="h3 mb-2 text-gray-800">Bình luận</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Cập nhật</h2>
+        <p>Bình luận: @Model.Tieude</p>
+    </div>
+    <div class="card-body">
+        <div class="col-md-7">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Tieude, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Tieude, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Tieude, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.NoiDung, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ThoiGian, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            <input name="ThoiGian" id="ThoiGian" value="@Html.DisplayFor(model => model.ThoiGian)" class="form-control" readonly />
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("UserId", null,"Tài Khoản", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductId, "ProductId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("ProductId", null,"Sản Phẩm", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+        </div>
+    </div>
+</div>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }

@@ -18,6 +18,7 @@
         public int Id { get; set; }
 
         [DisplayName("Ngày đặt hành")]
+        [DataType(DataType.Date)]
         public DateTime? OrderDate { get; set; }
 
         public int? UserId { get; set; }
@@ -31,7 +32,7 @@
         [DisplayName("Email người nhận")]
         public string ShipEmail { get; set; }
 
-        [DisplayName("SĐT người nhận")]
+        [DisplayName("SĐT người nhận"),DataType(DataType.PhoneNumber)]
         public string ShipPhoneNumber { get; set; }
 
         [DisplayName("Xác nhận hoá đơn")]

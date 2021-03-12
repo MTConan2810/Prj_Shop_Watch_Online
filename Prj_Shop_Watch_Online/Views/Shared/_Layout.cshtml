@@ -33,15 +33,28 @@
                         <div class="col-md-3" style="font-size:16px; color:yellow">
                             <div class="row">
                                 <div class="col-md-8 offset-1" style="text-align:center;">
-                                    <a href="@Url.Action("Login","Account")" style="color: yellow">Đăng nhập</a>
-                                    <br />
-                                    <a href="@Url.Action("Register","Account")" style="color: yellow">Đăng kí</a>
+                                    @if (Session["idUser"] != null)
+                                    {
+                                        <div class="dropdown ">
+                                            <div class="text-center" data-toggle="dropdown">
+                                                <button class="btn" style="font-style:italic;font-variant-caps:all-petite-caps;color:yellow;width:120px;border:1px solid yellow; border-radius:8px;">@Session["HoTenUI"] &nbsp; <i class="fas fa-user"></i></button>
+                                            </div>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Hồ sơ</a>
+                                                <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="@Url.Action("Logout","Account")"><i class="fas fa-sign-out-alt"></i> &nbsp; Đăng xuất</a>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Login","Account")" class="btn" style="font-style: italic; color: yellow; width: 120px; border: 1px solid yellow; border-radius: 8px; margin-bottom:5px;margin-top:-7px;"><i class="fas fa-sign-in-alt"></i> &nbsp; Đăng nhập</a>
+                                        <br />
+                                        <a href="@Url.Action("Register","Account")" class="btn" style="font-style: italic; color: yellow; width: 120px; border: 1px solid yellow; border-radius: 8px;">Đăng kí</a>
+                                    }
                                 </div>
                                 <div class="col-md-2 offset-1" style="text-align:right">
-                                    @*<a>
-                                            <span><i class="fas fa-cart-plus fa-2x"></i></span>
-                                            <span id="number-cart">0</span>
-                                        </a>*@
                                     @{
                                         Html.RenderAction("_CartView", "Home");
                                     }
