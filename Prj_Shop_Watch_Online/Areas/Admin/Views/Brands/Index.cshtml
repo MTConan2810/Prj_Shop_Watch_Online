@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Thương hiệu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int stt = 1;
 }
 
 <h1 class="h3 mb-2 text-gray-800">Thương hiệu</h1>
@@ -33,6 +34,9 @@
                 <thead>
                     <tr>
                         <th>
+                            STT
+                        </th>
+                        <th>
                             Thương hiệu
                         </th>
                         <th>
@@ -51,6 +55,9 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td>
+                                @(stt++)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.TenTH)
                             </td>
@@ -78,9 +85,26 @@
                             </td>
                             <td style="width:70px;">
                                 <a href="@Url.Action("Edit","Brands", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
-                                <a href="@Url.Action("Delete","Brands", new { id = item.Id })" title="Xoá"><i class="far fa-trash-alt"></i></a>
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Brands", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </tbody>
             </table>

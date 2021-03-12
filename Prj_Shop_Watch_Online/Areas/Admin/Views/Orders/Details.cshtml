@@ -1,83 +1,140 @@
 ﻿@model Prj_Shop_Watch_Online.Models.Orders
-
+@using Prj_Shop_Watch_Online.Models
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    SWODBContext db = new SWODBContext();
+    int stt = 1;
+    decimal? total = 0;
+    var orderDT = db.OrderDetail.Where(s => s.OrderId == Model.Id).ToList();
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Orders</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Payment.PayName)
-        </dt>
+<h1 class="h3 mb-2 text-gray-800">Đơn hàng</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Chi tiết</h2>
+        <p>Đơn hàng: @Model.Id</p>
+    </div>
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-md-4">
+                <h4>Thông tin khách hàng</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Payment.PayName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Payment.PayName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Payment.PayName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Users.Username)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Users.Username)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Users.Username)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Users.Username)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OrderDate)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.OrderDate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShipName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ShipName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShipName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShipName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShipAddress)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ShipAddress)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShipAddress)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShipAddress)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShipEmail)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ShipEmail)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShipEmail)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShipEmail)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShipPhoneNumber)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ShipPhoneNumber)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ShipPhoneNumber)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShipPhoneNumber)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
 
-    </dl>
+                </dl>
+            </div>
+            <div class="col-md-8">
+                <h4>Đơn hàng</h4>               
+                <hr />
+                <table class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>
+                                Sản phẩm
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in orderDT)
+                        {
+                            total += (decimal)item.Price;
+                            <tr>
+                                <td>@(stt++)</td>
+                                <td>@Html.DisplayFor(model => item.Products.MaSp)</td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Quantity)
+                                </td>
+                                <td>@String.Format("{0:C}", item.Price)</td>                              
+                            </tr>                         
+                        }
+
+                    </tbody>
+                    <tfoot style="background-color:wheat;">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="text-right">Tổng Tiền</th>
+                            <th>@String.Format("{0:C}", total)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <p>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Quay lại", "Index")
+            </p>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

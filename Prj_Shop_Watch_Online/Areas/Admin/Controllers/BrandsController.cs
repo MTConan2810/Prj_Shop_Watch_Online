@@ -124,24 +124,22 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         }
 
         // GET: Admin/Brands/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Brands brands = await db.Brands.FindAsync(id);
-            if (brands == null)
-            {
-                return HttpNotFound();
-            }
-            return View(brands);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Brands brands = await db.Brands.FindAsync(id);
+        //    if (brands == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(brands);
+        //}
 
-        // POST: Admin/Brands/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        // POST: Admin/Brands/Delete/5        
+        public async Task<ActionResult> Delete(int id)
         {
             Brands brands = await db.Brands.FindAsync(id);
             db.Brands.Remove(brands);

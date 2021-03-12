@@ -1,63 +1,110 @@
-﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Comments>
-
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Comments>
+@using PagedList.Mvc
 @{
     ViewBag.Title = "Bình luận";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int stt = 1;
 }
 
-<h2>Bình luận</h2>
+<h1 class="h3 mb-2 text-gray-800">Bình luận</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="text-right">
+            <a href="@Url.Action("Create","Comments")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+        </div>
+        <div>
+            @using (Html.BeginForm("Index", "Comments", FormMethod.Get))
+            {
+                <input id="keyword" name="keyword" placeholder="Tìm theo tên tài khoản" style="height:38px;border:1px solid blue; border-radius:8px;" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <div style="margin-top:10px; margin-bottom:-5px;">
+                    <label for="pagesize">
+                        Hiển thị
+                        @Html.DropDownList("pagesize", null, "10", new { @style = "border: 1px solid blue; border-radius:8px;", @onchange = "this.form.submit();" })
+                        Bình luận
+                    </label>
+                </div>
+            }
 
-<div class="text-right">
-    <a href="@Url.Action("Create","Comments")">Tạo mới</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Mã Sản phẩm
+                        </th>
+                        <th>
+                            Tên tài khoản
+                        </th>
+                        <th>
+                            Tiêu đề
+                        </th>
+                        <th>
+                            Nội dung
+                        </th>
+                        <th>
+                            Thời gian
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(stt++)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Products.MaSp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Users.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tieude)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NoiDung)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ThoiGian)
+                            </td>
+                            <td style="width:70px;">
+                                <a href="@Url.Action("Edit","Comments", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Comments", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-md-4 offset-8 text-right">
+                Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Comments", new { page, pagesize = ViewBag.pagesizenow }))
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row">
-    <input id="keyword" name="keyword" placeholder="Tìm theo tên" />
-    <button type="submit">tìm</button>
-</div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Products.MaSp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Users.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tieude)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoiDung)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThoiGian)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Products.MaSp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Users.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tieude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoiDung)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ThoiGian)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>

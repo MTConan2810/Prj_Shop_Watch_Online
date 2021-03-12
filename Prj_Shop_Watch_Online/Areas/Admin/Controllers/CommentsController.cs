@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Prj_Shop_Watch_Online.Models;
+using PagedList;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
@@ -16,10 +17,23 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Admin/Comments
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string keyword, int? page, int? pagesize)
         {
-            var comments = db.Comments.Include(c => c.Products).Include(c => c.Users);
-            return View(await comments.ToListAsync());
+            List<Comments> comments = db.Comments.Select(s => s).ToList();
+            List<int> pagecout = new List<int> { 5, 20, 25, 50 };
+            ViewBag.pagesize = new SelectList(pagecout);
+            ViewBag.pagesizenow = pagesize;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+
+                comments = comments.Where(obj =>
+                                       obj.Users.FullName.ToUpper().Contains(keyword.ToUpper())
+                                       ).Select(s => s).ToList();
+
+            }
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+            return View(comments.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Comments/Details/5
@@ -100,24 +114,24 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         }
 
         // GET: Admin/Comments/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Comments comments = await db.Comments.FindAsync(id);
-            if (comments == null)
-            {
-                return HttpNotFound();
-            }
-            return View(comments);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Comments comments = await db.Comments.FindAsync(id);
+        //    if (comments == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(comments);
+        //}
 
-        // POST: Admin/Comments/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        //// POST: Admin/Comments/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
         {
             Comments comments = await db.Comments.FindAsync(id);
             db.Comments.Remove(comments);

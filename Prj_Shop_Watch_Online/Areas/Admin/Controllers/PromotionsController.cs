@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Prj_Shop_Watch_Online.Models;
+using PagedList;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
 {
@@ -16,9 +17,23 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         private SWODBContext db = new SWODBContext();
 
         // GET: Admin/Promotions
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string keyword, int? page, int? pagesize)
         {
-            return View(await db.Promotions.ToListAsync());
+            List<Promotions> promotions = db.Promotions.Select(s => s).ToList();
+            List<int> pagecout = new List<int> { 5, 20, 25, 50 };
+            ViewBag.pagesize = new SelectList(pagecout);
+            ViewBag.pagesizenow = pagesize;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+
+                promotions = promotions.Where(obj =>
+                                       obj.Name.ToUpper().Contains(keyword.ToUpper())
+                                       ).Select(s => s).ToList();
+
+            }
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+            return View(promotions.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/Promotions/Details/5
@@ -39,6 +54,8 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         // GET: Admin/Promotions/Create
         public ActionResult Create()
         {
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH");
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "MaSp");
             return View();
         }
 
@@ -55,7 +72,8 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", promotions.BrandId);
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "MaSp", promotions.ProductId);
             return View(promotions);
         }
 
@@ -71,6 +89,8 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", promotions.BrandId);
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "MaSp", promotions.ProductId);
             return View(promotions);
         }
 
@@ -87,28 +107,30 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", promotions.BrandId);
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "MaSp", promotions.ProductId);
             return View(promotions);
         }
 
         // GET: Admin/Promotions/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Promotions promotions = await db.Promotions.FindAsync(id);
-            if (promotions == null)
-            {
-                return HttpNotFound();
-            }
-            return View(promotions);
-        }
+        //public async Task<ActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Promotions promotions = await db.Promotions.FindAsync(id);
+        //    if (promotions == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(promotions);
+        //}
 
-        // POST: Admin/Promotions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        //// POST: Admin/Promotions/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
         {
             Promotions promotions = await db.Promotions.FindAsync(id);
             db.Promotions.Remove(promotions);

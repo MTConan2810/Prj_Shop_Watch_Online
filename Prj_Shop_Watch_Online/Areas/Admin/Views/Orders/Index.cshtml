@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Orders>
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Orders>
+@using PagedList.Mvc
 
 @{
     ViewBag.Title = "Đơn hàng";
@@ -6,95 +7,137 @@
     int stt = 1;
 }
 
-<h2>Đơn hàng</h2>
 
-<div class="text-right">
-    <a href="@Url.Action("Create","Orders")">Tạo mới</a>
-</div>
-<div class="row">
-    <input id="keyword" name="keyword" placeholder="Tìm theo tên" />
-    <button type="submit">tìm</button>
-</div>
-<table class="table">
-    <tr>
-        <th>
-            STT
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Users.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OrderDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipPhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Payment.PayName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        
-        <tr>
-            <td>
-                @(stt++)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Users.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Payment.PayName)
-            </td>
-            @if(item.Status == true)
+<h1 class="h3 mb-2 text-gray-800">Đơn hàng</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="text-right">
+            <a href="@Url.Action("Create","Orders")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+        </div>
+        <div>
+            @using (Html.BeginForm("Index", "Orders", FormMethod.Get))
             {
-                <td>
-                    đã xác nhận
-                </td>
-            }
-            else
-            {
-                <td>
-                    chưa xác nhận
-                </td>
+                <input id="keyword" name="keyword" placeholder="Tìm theo tên khách hàng" style="height:38px;border:1px solid blue; border-radius:8px;" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <div style="margin-top:10px; margin-bottom:-5px;">
+                    <label for="pagesize">
+                        Hiển thị
+                        @Html.DropDownList("pagesize", null, "10", new { @style = "border: 1px solid blue; border-radius:8px;", @onchange = "this.form.submit();" })
+                        Đơn hàng
+                    </label>
+                </div>
             }
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Tài khoản
+                        </th>
+                        <th>
+                            Ngày đặt hàng
+                        </th>
+                        <th>
+                            Khách hàng
+                        </th>
+                        <th>
+                            Địa chỉ nhận
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            SĐT khách hàng
+                        </th>
+                        <th>
+                            Phương thức thanh toán
+                        </th>
+                        <th>
+                            Xác nhận đơn hàng
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
 
-</table>
+                        <tr>
+                            <td>
+                                @(stt++)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Users.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipAddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShipPhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Payment.PayName)
+                            </td>
+                            @if (item.Status == true)
+                            {
+                                <td>
+                                    đã xác nhận
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    chưa xác nhận
+                                </td>
+                            }
+
+                            <td style="width:100px;">
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id }) <br />
+                                <a href="@Url.Action("Edit","Orders", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Orders", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-md-4 offset-8 text-right">
+                Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Orders", new { page, pagesize = ViewBag.pagesizenow }))
+            </div>
+        </div>
+    </div>
+</div>

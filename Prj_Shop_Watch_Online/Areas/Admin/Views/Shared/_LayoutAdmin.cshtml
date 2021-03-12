@@ -129,7 +129,7 @@
                         <h6 class="collapse-header">Thương hiệu</h6>
                         @foreach (var item in db.Brands)
                         {
-                            <a class="collapse-item" href="@Url.Action("Index","Products")">@item.TenTH</a>
+                            <a class="collapse-item" href="@Url.Action("Index","Products",new { brandId = item.Id})">@item.TenTH</a>
                         }
                         @*<a class="collapse-item" href="login.html">Thương hiệu 1</a>
                         <a class="collapse-item" href="register.html">Thương hiệu 2</a>

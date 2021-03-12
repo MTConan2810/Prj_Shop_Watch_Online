@@ -47,11 +47,12 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                         {
                             foreach (var item in checkRole)
                             {
+                                Session["Role"] = item.GroupCode;
                                 if (item.GroupCode.Equals("ADMIN") || item.GroupCode.Equals("NV"))
-                                {
-                                    Session["Role"] = item.GroupCode;
+                                {                                  
                                     return RedirectToAction("Index", "Home");
                                 }
+                                
                             }
                         } 
                         else
