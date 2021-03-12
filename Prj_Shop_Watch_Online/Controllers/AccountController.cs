@@ -25,7 +25,7 @@ namespace Prj_Shop_Watch_Online.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Active")] Users users)
         {
-            var tkcheck = db.Users.Where(tk => tk.Email == users.Email || tk.Username == users.Username);
+            var tkcheck = db.Users.Where(tk => tk.Email == users.Email || tk.Username.ToUpper() == users.Username.ToUpper());
             if (tkcheck.Count() == 0)
             {
                 if (ModelState.IsValid)
@@ -62,12 +62,12 @@ namespace Prj_Shop_Watch_Online.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = db.Users.Where(u => u.Username.Equals(Username) && u.Password.Equals(Password)).ToList();
+                var user = db.Users.Where(u => u.Username.ToUpper().Equals(Username.ToUpper()) && u.Password.Equals(Password)).ToList();
                 if (user.Count() > 0)
                 {
                     //add session
-                    Session["HoTen"] = user.FirstOrDefault().FullName;
-                    Session["Email"] = user.FirstOrDefault().Email;
+                    Session["HoTenUI"] = user.FirstOrDefault().FullName;
+                    Session["EmailUI"] = user.FirstOrDefault().Email;
                     Session["idUser"] = user.FirstOrDefault().Id;
                     if(user.FirstOrDefault().Active == true)
                     {

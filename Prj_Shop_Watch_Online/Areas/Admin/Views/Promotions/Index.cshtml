@@ -1,0 +1,176 @@
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Promotions>
+@using PagedList.Mvc
+@using Prj_Shop_Watch_Online.Models
+@{
+    ViewBag.Title = "Khuyến mãi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int stt = 1;
+    SWODBContext db = new SWODBContext();
+}
+
+<h1 class="h3 mb-2 text-gray-800">Khuyến mãi</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="text-right">
+            <a href="@Url.Action("Create","Promotions")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+        </div>
+        <div>
+            @using (Html.BeginForm("Index", "Promotions", FormMethod.Get))
+            {
+                <input id="keyword" name="keyword" placeholder="Tìm theo tên" style="height:38px;border:1px solid blue; border-radius:8px;" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <div style="margin-top:10px; margin-bottom:-5px;">
+                    <label for="pagesize">
+                        Hiển thị
+                        @Html.DropDownList("pagesize", null, "10", new { @style = "border: 1px solid blue; border-radius:8px;", @onchange = "this.form.submit();" })
+                        Khuyến mãi
+                    </label>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Tên khuyến mãi
+                        </th>
+                        <th>
+                            Từ ngày
+                        </th>
+                        <th>
+                            Đến ngày
+                        </th>
+                        <th>
+                            Áp dụng cho tất cả
+                        </th>
+                        <th>
+                            Khuyến mãi theo %
+                        </th>
+                        <th>
+                            Khuyến mãi theo tiền
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Tên thương hiệu
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(stt++)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FromDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ToDate)
+                            </td>
+                            @if (item.ApplyForAll == true)
+                            {
+                                <td>
+                                    Áp dụng
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Không
+                                </td>
+                            }
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountPercent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountAmount)
+                            </td>
+                            <td>
+                                @{
+                                    string prMasp = "";
+                                    string bTen = "";
+                                    foreach (var pr in db.Products)
+                                    {
+                                        if (pr.Id == item.ProductId)
+                                        {
+                                            prMasp = pr.MaSp;
+                                        }
+                                    }
+                                    foreach (var br in db.Brands)
+                                    {
+                                        if (br.Id == item.BrandId)
+                                        {
+                                            bTen = br.TenTH;
+                                        }
+                                    }
+                                }
+                                @prMasp
+                            </td>
+                            <td>
+                                @bTen
+                            </td>
+                            @if (item.Status == true)
+                            {
+                                <td>
+                                    Kích hoạt
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Tắt
+                                </td>
+                            }
+
+
+                            <td style="width:70px;">
+                                <a href="@Url.Action("Edit","Promotions", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Promotions", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-md-4 offset-8 text-right">
+                Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Promotions", new { page, pagesize = ViewBag.pagesizenow }))
+            </div>
+        </div>
+    </div>
+</div>

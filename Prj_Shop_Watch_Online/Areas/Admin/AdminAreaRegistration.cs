@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Shop_Watch_Online.Areas.Admin
+namespace Prj_Shop_Watch_Online.Areas.Admin
 {
     public class AdminAreaRegistration : AreaRegistration 
     {
@@ -17,7 +17,7 @@ namespace Shop_Watch_Online.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", controller = "Home", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

@@ -23,7 +23,7 @@
         [DisplayName("Mặc định")]
         public bool IsDefault { get; set; }
 
-        [DisplayName("Ngày tạo")]
+        [DisplayName("Ngày tạo"), DataType(DataType.Date)]
         public DateTime? DateCreated { get; set; }
 
         [DisplayName("Thứ tự")]

@@ -1,0 +1,67 @@
+﻿@model Prj_Shop_Watch_Online.Models.AppList
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AppList</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApiDomain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApiDomain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebDomain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebDomain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AutoLoginUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AutoLoginUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

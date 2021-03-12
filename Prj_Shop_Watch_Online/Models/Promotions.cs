@@ -11,12 +11,15 @@
     {
         public int Id { get; set; }
 
-        [DisplayName("Từ ngày")]
+        [Required(ErrorMessage ="Ngày bắt đầu khuyến mãi không được để trống")]
+        [DisplayName("Từ ngày"),DataType(DataType.Date)]
         public DateTime FromDate { get; set; }
 
-        [DisplayName("Đến ngày")]
+        [Required(ErrorMessage = "Ngày kết thúc khuyến mãi không được để trống")]
+        [DisplayName("Đến ngày"), DataType(DataType.Date)]
         public DateTime ToDate { get; set; }
 
+        
         [DisplayName("Áp dụng cho tất cả")]
         public bool ApplyForAll { get; set; }
 
@@ -30,9 +33,11 @@
 
         public int? BrandId { get; set; }
 
+
         [DisplayName("Trạng thái")]
         public bool Status { get; set; }
 
+        [Required(ErrorMessage ="Tên khuyến mãi không được để trống")]
         [DisplayName("Tên khuyến mãi")]
         public string Name { get; set; }
     }

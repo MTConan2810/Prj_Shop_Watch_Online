@@ -12,6 +12,7 @@
     {
         public int Id { get; set; }
 
+
         [DisplayName("Mã ứng dụng")]
         public string AppCode { get; set; }
 

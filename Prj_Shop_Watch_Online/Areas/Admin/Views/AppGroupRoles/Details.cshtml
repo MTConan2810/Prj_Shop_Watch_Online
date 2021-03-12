@@ -1,0 +1,51 @@
+﻿@model Prj_Shop_Watch_Online.Models.AppGroupRole
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AppGroupRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
