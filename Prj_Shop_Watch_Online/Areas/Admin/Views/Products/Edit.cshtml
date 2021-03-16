@@ -30,7 +30,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.MaSp, htmlAttributes: new { @class = "control-label col-md-10" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.MaSp, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.MaSp, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 @Html.ValidationMessageFor(model => model.MaSp, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         </div>
                     </div>
                 }
-                </div>
+            </div>
             <div class="col-md-8">
                 <h4>Ảnh sản phẩm</h4>
                 <p>---Thêm ảnh sản phẩm---</p>
@@ -195,29 +195,29 @@
                         @foreach (var item in productImage)
                         {
                             string ImagePath = "~/wwwroot/ImageProducts/" + item.ImagePath;
-                        <tr>
-                            <td>@(stt++)</td>
-                            <td>
-                                <img src="@Url.Content(ImagePath)" class="img img-thumbnail" width="250" height="450" />
-                            </td>
-                            @if (item.IsDefault == true)
-                            {
+                            <tr>
+                                <td>@(stt++)</td>
                                 <td>
-                                    Mặc định
+                                    <img src="@Url.Content(ImagePath)" class="img img-thumbnail" width="250" height="450" />
                                 </td>
-                            }
-                            else
-                            {
-                                <td>
+                                @if (item.IsDefault == true)
+                                {
+                                    <td>
+                                        Mặc định
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                    </td>
+                                }
 
+                                <td>@Html.DisplayFor(model => item.DateCreated)</td>
+                                <td style="width:35px;">
+                                    <a href="#" title="Xoá" data-toggle="modal" data-target="#deleteOD-@item.Id"><i class="far fa-trash-alt"></i></a>
                                 </td>
-                            }
+                            </tr>
 
-                            <td>@Html.DisplayFor(model=>item.DateCreated)</td>
-                            <td style="width:35px;">                                
-                                <a href="#" title="Xoá" data-toggle="modal" data-target="#deleteOD-@item.Id"><i class="far fa-trash-alt"></i></a>
-                            </td>
-                        </tr>                           
                             <div class="modal fade" id="deleteOD-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -240,11 +240,11 @@
                     </tbody>
                     <tfoot style="background-color:wheat;">
                         <tr>
-                            @using (Html.BeginForm("AddImage", "Products",FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("AddImage", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 <th>
-                                    <input name="productId" id="productId" value="@Model.Id" type="hidden"/>
-                                    <input name="caption" id="caption" value="@Model.MaSp" type="hidden"/>
+                                    <input name="productId" id="productId" value="@Model.Id" type="hidden" />
+                                    <input name="caption" id="caption" value="@Model.MaSp" type="hidden" />
                                 </th>
                                 <th>
                                     <img id="output" class="img-rounded" alt="Ảnh" width="180" height="200" src="~/wwwroot/no-image-news.png" />
@@ -261,7 +261,7 @@
                                 <th></th>
                                 <th><button type="submit" class="btn-primary"><i class="fas fa-plus-circle fa-2x"></i></button></th>
                             }
-                        </tr>   
+                        </tr>
                         <script>
                             var loadFile = function (event) {
                                 var image = document.getElementById("output")
@@ -271,12 +271,13 @@
                     </tfoot>
                 </table>
             </div>
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
         </div>
     </div>
 </div>
-<div>
-    @Html.ActionLink("Quay lại", "Index")
-</div>
+
 
                 @section Scripts {
                     @Scripts.Render("~/bundles/jqueryval")

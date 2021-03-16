@@ -1,64 +1,114 @@
-﻿@model IEnumerable<Prj_Shop_Watch_Online.Models.Users>
-
+﻿@model PagedList.IPagedList<Prj_Shop_Watch_Online.Models.Users>
+@using PagedList.Mvc
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h1 class="h3 mb-2 text-gray-800">Tài khoản</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div class="text-right">
+            <a href="@Url.Action("Create","Users")" title="Tạo mới"><i class="fas fa-plus-circle fa-2x"></i></a>
+        </div>
+        <div class="row" style="margin:5px auto 20px;">
+            @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+            {
+                <input id="keyword" name="keyword" placeholder="Tìm theo tên tài khoản" style="height:38px;border:1px solid blue; border-radius:8px;" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                <div style="margin-top:10px; margin-bottom:-5px;">
+                    <label for="pagesize">
+                        Hiển thị
+                        @Html.DropDownList("pagesize", null, "10", new { @style = "border: 1px solid blue; border-radius:8px;", @onchange = "this.form.submit();" })
+                        Tài khoản
+                    </label>
+                </div>
+            }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Note)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th></th>
-    </tr>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Tài khoản
+                        </th>                     
+                        <th>
+                            Họ và tên
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Ghi chú
+                        </th>
+                        <th>
+                            Hoạt động
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            @if (item.Active == true)
+                            {
+                                <td>
+                                    Có
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    đã khoá
+                                </td>
+                            }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Note)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+                            <td style="width:100px;">
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.Id }) <br />
+                                <a href="@Url.Action("Edit","Users", new { id = item.Id })" title="Cập nhật"><i class="far fa-edit"></i></a>|
+                                <a href="#" title="Xoá" data-toggle="modal" data-target="#delete-@item.Id"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        <div class="modal fade" id="delete-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top:200px;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xoá?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Chọn "Xoá" để xoá</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Huỷ</button>
+                                        <a class="btn btn-danger" href="@Url.Action("Delete","Users", new { id = item.Id })">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <div class="col-md-4 offset-8 text-right">
+                Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Users", new { page, pagesize = ViewBag.pagesizenow }))
+            </div>
+        </div>
+    </div>
+</div>

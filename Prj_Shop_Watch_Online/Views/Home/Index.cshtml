@@ -40,51 +40,78 @@
                 <img src="~/wwwroot/Logo-Banner/galle_1604975660.jpg" />
             </div>
             @*<div id="htmlcaption" style="display: none;">
-                <em>HTML</em> caption. Link to <a href="http://www.google.com/">Google</a>.
-            </div>*@
+                    <em>HTML</em> caption. Link to <a href="http://www.google.com/">Google</a>.
+                </div>*@
             <div class="clearfix"> </div>
         </div>
 </section>
-<div style="margin:20px 0;">
+
+<div style="margin:30px auto; position:page">
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
     <form>
         <div id="searchALL">
-            <span>@Html.DropDownList("gioitinh",null, "Giới Tính", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
-            <span>@Html.DropDownList("thuonghieu",null,"Thương hiệu", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
+            <span>@Html.DropDownList("gioitinh", null, "Giới Tính", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
+            <span>@Html.DropDownList("thuonghieu", null, "Thương hiệu", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
             <span>
-                <select id="loaimay" name="giafrom" class="Filter">
-                    <option value="">Mức giá</option>
-                    <option value="2000000">dưới 2 triệu</option>
-                </select>
+                @Html.DropDownList("mucgia", null, "Mức giá", new { @class = "Filter", @onchange = "this.form.submit();" })
             </span>
-        </div>       
+            <span>
+                @Html.DropDownList("loaidh", null, "Loại đồng hồ", new { @class = "Filter", @onchange = "this.form.submit();" })
+            </span>
+            <span>
+                @Html.DropDownList("kieudh", null, "Kiểu đồng hồ", new { @class = "Filter", @onchange = "this.form.submit();" })
+            </span>
+        </div>
         @*<button type="submit" class="btn btn-primary">Tìm kiếm</button>*@
         <div style="background-color:#f5f5f5; position:relative;text-align:center;">
             <h2 style="font-variant-caps:normal; color:darkslategray;padding-top:5px;padding-bottom:3px;">Đồng Hồ @ViewBag.SexSearch @ViewBag.THSearch</h2>
             <div style="position:absolute; right:50px; bottom:10px; width:100px; height:20px; font-size:16px;text-align:center">
-                <select name="sortOder" id="sortOder" style="background-color: white; border: 1px solid #b3b3b3; border-radius: 8px;" onchange="this.form.submit();">
-                    @if (!string.IsNullOrEmpty(ViewBag.CurrentSort))
-                    {
-                        <option value="@ViewBag.CurrentSort">@ViewBag.CurrentSort</option>                        
-                    }
-                    <option value="">-Sắp xếp theo-</option>
-                    <option value="@ViewBag.SapTheoTen">@ViewBag.SapTheoTen</option>
-                    <option value="@ViewBag.KhuyenMai">@ViewBag.KhuyenMai</option>
-                    <option value="@ViewBag.SapTheoGia">@ViewBag.SapTheoGia</option>
-                    <option value="@ViewBag.SapTheoGia_DESC">@ViewBag.SapTheoGia_DESC</option>
-                </select>
+                @Html.DropDownList("sortOder", null, "Sắp xếp theo", new { @style = "background-color: white; border: 1px solid #b3b3b3; border-radius: 8px;", @onchange = "this.form.submit();" })
             </div>
         </div>
-        <div>
-            @if (!string.IsNullOrEmpty(ViewBag.THSearch))
-            {
-                <button class="btn btn-primary">
-                    @ViewBag.THSearch <i class="fas fa-times"></i>
-                </button>               
+        @if (
+    !string.IsNullOrEmpty(ViewBag.THSearch) ||
+    !string.IsNullOrEmpty(ViewBag.CurrentSort) ||
+    !string.IsNullOrEmpty(ViewBag.currentGia) ||
+    !string.IsNullOrEmpty(ViewBag.currentLoaiDH) ||
+    !string.IsNullOrEmpty(ViewBag.currentKieuDH)
+    )
+        {
+            <div>
+                @if (!string.IsNullOrEmpty(ViewBag.THSearch))
+                {
+                    <button class="btn btn-primary">
+                        @ViewBag.THSearch <i class="fas fa-times"></i>
+                    </button>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.currentGia))
+                {
+                    <button class="btn btn-primary">
+                        @ViewBag.currentGia <i class="fas fa-times"></i>
+                    </button>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.currentLoaiDH))
+                {
+                    <button class="btn btn-primary">
+                        @ViewBag.currentLoaiDH <i class="fas fa-times"></i>
+                    </button>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.currentKieuDH))
+                {
+                    <button class="btn btn-primary">
+                        @ViewBag.currentKieuDH <i class="fas fa-times"></i>
+                    </button>
+                }
+                @if (!string.IsNullOrEmpty(ViewBag.CurrentSort))
+                {
+                    <button class="btn btn-primary">
+                        @ViewBag.CurrentSort <i class="fas fa-times"></i>
+                    </button>
+                }
                 <a class="btn btn-danger" href="@Url.Action("Index","Home")">Xoá hết <i class="fas fa-times"></i></a>
-            }
-        </div>
+            </div>
+        }
     </form>
     }
 </div>
