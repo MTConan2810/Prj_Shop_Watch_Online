@@ -73,8 +73,8 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Quản lí tài khoản</h6>
-                            <a class="collapse-item" href="@Url.Action("Index","Users")">Nhân viên</a>
-                            <a class="collapse-item" href="@Url.Action("Index","Users")">Khách hàng</a>
+                            <a class="collapse-item" href="@Url.Action("Index","Users", new {groupcode = "NV" })">Nhân viên</a>
+                            <a class="collapse-item" href="@Url.Action("Index","Users", new {groupcode = "KH" })">Khách hàng</a>
                             <div class="collapse-divider"></div>
                             <a class="collapse-item" href="@Url.Action("Index","Users")">Xem tất cả</a>
                         </div>

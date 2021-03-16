@@ -25,26 +25,35 @@ namespace Prj_Shop_Watch_Online.Controllers
         //        return request[methodInfo.Name] != null;
         //    }
         //}
-        public ActionResult Index(string sortOder, string thuonghieu, string keyword, string gioitinh , decimal? giafrom, decimal? giato,int? page)
+        public ActionResult Index(string sortOder, string thuonghieu, string keyword, string gioitinh , string mucgia,string loaidh,string kieudh,string loaimay,int? page)
         {
             List<Products> products = db.Products.Select(s => s).ToList();
-
+            //Find
             //sortoder
-            ViewBag.CurrentSort = sortOder;
-            ViewBag.SapTheoTen = "Sắp theo tên Z-A";
-            ViewBag.SapTheoGia = "Giá tăng dần";
-            ViewBag.SapTheoGia_DESC ="Giá giảm dần";
-            ViewBag.KhuyenMai = "Khuyến mãi";
+            List<string> listsort = new List<string> { "Sắp theo tên Z-A", "Giá tăng dần", "Giá giảm dần", "Khuyến mãi" };
+            ViewBag.sortOder = new SelectList(listsort);                       
             //search
             IEnumerable<string> productsex = (from c in db.Products where (!string.IsNullOrEmpty(c.GioiTinh)) select c.GioiTinh).Distinct();                 
             ViewBag.gioitinh = new SelectList(productsex);
-
+            
             ViewBag.thuonghieu = new SelectList(db.Brands, "TenTH", "TenTH");
+            
+            List<string> listgia = new List<string> { "Đồng giá 499.000đ", "Dưới 2 triệu", "Từ 2 triệu đến 5 triệu", "Trên 5 triệu", "Trên 100 triệu" };
+            ViewBag.mucgia = new SelectList(listgia);
+            
+            IEnumerable<string> productloaidh = (from c in db.Products where (!string.IsNullOrEmpty(c.LoaiDH)) select c.LoaiDH).Distinct();
+            ViewBag.loaidh = new SelectList(productloaidh);
+
+            IEnumerable<string> productkieudh = (from c in db.Products where (!string.IsNullOrEmpty(c.KieuDH)) select c.KieuDH).Distinct();
+            ViewBag.kieudh = new SelectList(productkieudh);
 
             //hiển thị chon
             ViewBag.SexSearch = gioitinh;
             ViewBag.THSearch = thuonghieu;
-
+            ViewBag.CurrentSort = sortOder;
+            ViewBag.currentGia = mucgia;
+            ViewBag.currentLoaiDH = loaidh;
+            ViewBag.currentKieuDH = kieudh;
             if (!string.IsNullOrEmpty(keyword))
             {
                 page = 1;
@@ -65,6 +74,37 @@ namespace Prj_Shop_Watch_Online.Controllers
                                        obj.Brands.TenTH.Equals(thuonghieu)
                                        ).Select(s => s).ToList();
             }
+            //muc gia
+            switch(mucgia)
+            {
+                case "Đồng giá 499.000đ":
+                    products = products.Where(obj => obj.Gia == 499000).Select(s => s).ToList();
+                    break;
+                case "Dưới 2 triệu":
+                    products = products.Where(obj => obj.Gia < 2000000).Select(s => s).ToList();
+                    break;
+                case "Từ 2 triệu đến 5 triệu":
+                    products = products.Where(obj => obj.Gia >= 2000000 && obj.Gia <= 5000000).Select(s => s).ToList();
+                    break;
+                case "Trên 5 triệu":
+                    products = products.Where(obj => obj.Gia > 5000000).Select(s => s).ToList();
+                    break;
+                case "Trên 100 triệu":
+                    products = products.Where(obj => obj.Gia > 100000000).Select(s => s).ToList();
+                    break;
+            }
+            if (!string.IsNullOrEmpty(loaidh))
+            {
+                products = products.Where(obj =>
+                                       obj.LoaiDH.Equals(loaidh)
+                                       ).Select(s => s).ToList();
+            }
+            if (!string.IsNullOrEmpty(kieudh))
+            {
+                products = products.Where(obj =>
+                                       obj.KieuDH.Equals(kieudh)
+                                       ).Select(s => s).ToList();
+            }
             //sort
             switch (sortOder)
             {
@@ -79,9 +119,7 @@ namespace Prj_Shop_Watch_Online.Controllers
                 case "Giá giảm dần":
                     products = products.OrderByDescending(s => s.Gia).ToList();
                     break;
-                case "Khuyến mãi":
-                    //var result = from obj in db.Products join km in db.Promotions on new { key1 = obj.Id, key2 = obj.BrandId }  equals new { key1 = km.ProductId, key2 = km.BrandId }
-                    //             select obj;  
+                case "Khuyến mãi":                    
                     var checkkm = from km in db.Promotions where (km.Status == true && km.FromDate <= DateTime.Now && km.ToDate >= DateTime.Now) select km;
                     var result = from obj in products
                                  from km in checkkm.ToList()

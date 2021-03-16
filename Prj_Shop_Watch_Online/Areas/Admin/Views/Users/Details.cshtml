@@ -1,67 +1,100 @@
 ﻿@model Prj_Shop_Watch_Online.Models.Users
-
+@using Prj_Shop_Watch_Online.Models
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Tài khoản";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    SWODBContext db = new SWODBContext();
+    int stt = 1;
+    var userGR = db.UserGroupRole.Where(s => s.Username.Equals(Model.Username)).ToList();
 }
 
-<h2>Details</h2>
+<h1 class="h3 mb-2 text-gray-800">Tài Khoản</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Chi tiết</h2>
+        <p>Tài khoản: @Model.Username</p>
+    </div>
+    <div class="card-body">
+        <div class="row ">
+            <div class="col-md-4">
+                <h4>Users</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </dt>
 
-<div>
-    <h4>Users</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>                
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.FullName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Note)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Active)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
+                </dl>
+            </div>
+            <div class="col-md-8">
+                <h4>Quyền</h4>
+                <hr />
+                <table class="table table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>
+                                Ứng dụng
+                            </th>
+                            <th>
+                                Quyền
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in userGR)
+                        {                            
+                            <tr>
+                                <td>@(stt++)</td>
+                                <td>@Html.DisplayFor(model => item.AppCode)</td>
+                                <td>
+                                    @Html.DisplayFor(model => item.GroupCode)
+                                </td>                              
+                            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-    </dl>
+                        }
+                    </tbody>                  
+                </table>
+            </div>
+            <p>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Quay lại", "Index")
+            </p>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
