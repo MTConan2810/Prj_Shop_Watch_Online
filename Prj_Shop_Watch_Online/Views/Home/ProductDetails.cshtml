@@ -41,11 +41,16 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                @foreach(var itemaaa in ListImage){
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@(stt++)" aria-label="Slide @(slide++)"></button>
+                @foreach (var itemaaa in ListImage)
+                {
+                    if (itemaaa.IsDefault == false)
+                    {
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@(stt++)" aria-label="Slide @(slide++)"></button>
+                    }
+
                 }
                 @*<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>*@
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>*@
             </div>
             <div class="carousel-inner" style="background-color:darkgrey; text-align:center; min-height:350px;">         
                     @foreach (var item in ListImage)

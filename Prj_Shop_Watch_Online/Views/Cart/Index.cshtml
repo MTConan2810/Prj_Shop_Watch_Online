@@ -202,12 +202,12 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary" id="GuiDH">Gửi đơn hàng</button>
-                            <script>
+                            @*<script>
                                 var button = document.getElementById("GuiDH");
                                 button.onclick = function () {
                                     alert("Đã gửi đơn hàng");
                                 }
-                            </script>
+                            </script>*@
                         }
                         <a href="/" class="btn btn-danger offset-3" style="margin-top:15px;">Tiếp tục mua hàng</a>
                     </div>
@@ -231,7 +231,7 @@
                                 quantity: quantity
                             },
                             success: function (result) {
-                                window.location.href = "/Cart";
+                                window.location.href = "/Cart";                               
                             }
                         });
                     });

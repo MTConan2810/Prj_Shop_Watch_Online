@@ -14,24 +14,15 @@ namespace Prj_Shop_Watch_Online.Controllers
     public class HomeController : Controller
     {
         private SWODBContext db = new SWODBContext();
-        //public class HttpParamActionAttribute : ActionNameSelectorAttribute
-        //{
-        //    public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
-        //    {
-        //        if (actionName.Equals(methodInfo.Name, StringComparison.InvariantCultureIgnoreCase))
-        //            return true;
 
-        //        var request = controllerContext.RequestContext.HttpContext.Request;
-        //        return request[methodInfo.Name] != null;
-        //    }
-        //}
-        public ActionResult Index(string sortOder, string thuonghieu, string keyword, string gioitinh , string mucgia,string loaidh,string kieudh,string loaimay,int? page)
+        public ActionResult Index(string sortOder, string thuonghieu, string keyword, string gioitinh , string mucgia,string loaidh,int? page)
         {
-            List<Products> products = db.Products.Select(s => s).ToList();
+            List<Products> products = db.Products.ToList();
             //Find
             //sortoder
             List<string> listsort = new List<string> { "Sắp theo tên Z-A", "Giá tăng dần", "Giá giảm dần", "Khuyến mãi" };
             ViewBag.sortOder = new SelectList(listsort);                       
+            
             //search
             IEnumerable<string> productsex = (from c in db.Products where (!string.IsNullOrEmpty(c.GioiTinh)) select c.GioiTinh).Distinct();                 
             ViewBag.gioitinh = new SelectList(productsex);
@@ -42,18 +33,15 @@ namespace Prj_Shop_Watch_Online.Controllers
             ViewBag.mucgia = new SelectList(listgia);
             
             IEnumerable<string> productloaidh = (from c in db.Products where (!string.IsNullOrEmpty(c.LoaiDH)) select c.LoaiDH).Distinct();
-            ViewBag.loaidh = new SelectList(productloaidh);
-
-            IEnumerable<string> productkieudh = (from c in db.Products where (!string.IsNullOrEmpty(c.KieuDH)) select c.KieuDH).Distinct();
-            ViewBag.kieudh = new SelectList(productkieudh);
-
+            ViewBag.loaidh = new SelectList(productloaidh);        
             //hiển thị chon
             ViewBag.SexSearch = gioitinh;
             ViewBag.THSearch = thuonghieu;
             ViewBag.CurrentSort = sortOder;
             ViewBag.currentGia = mucgia;
             ViewBag.currentLoaiDH = loaidh;
-            ViewBag.currentKieuDH = kieudh;
+
+
             if (!string.IsNullOrEmpty(keyword))
             {
                 page = 1;
@@ -98,13 +86,7 @@ namespace Prj_Shop_Watch_Online.Controllers
                 products = products.Where(obj =>
                                        obj.LoaiDH.Equals(loaidh)
                                        ).Select(s => s).ToList();
-            }
-            if (!string.IsNullOrEmpty(kieudh))
-            {
-                products = products.Where(obj =>
-                                       obj.KieuDH.Equals(kieudh)
-                                       ).Select(s => s).ToList();
-            }
+            }            
             //sort
             switch (sortOder)
             {
@@ -136,12 +118,6 @@ namespace Prj_Shop_Watch_Online.Controllers
             int pageNumber = (page ?? 1);
             return View(products.ToPagedList(pageNumber, pageSize));
         }
-        //[HttpPost, HttpParamAction]
-        //public ActionResult Reset()
-        //{
-        //    Index("", "", "", "", null, null, null);
-        //    return View();
-        //}
 
         // GET: Home/Details/5
         public async Task<ActionResult> ProductDetails(int? id)
