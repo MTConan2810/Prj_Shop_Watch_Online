@@ -46,11 +46,11 @@
         </div>
 </section>
 
-<div style="margin:30px auto; position:page">
+<div style="margin:30px auto;">
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
     <form>
-        <div id="searchALL">
+        <div id="searchALL" style="padding: 20px 5px;">
             <span>@Html.DropDownList("gioitinh", null, "Giới Tính", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
             <span>@Html.DropDownList("thuonghieu", null, "Thương hiệu", new { @class = "Filter", @onchange = "this.form.submit();" })</span>
             <span>
@@ -59,11 +59,7 @@
             <span>
                 @Html.DropDownList("loaidh", null, "Loại đồng hồ", new { @class = "Filter", @onchange = "this.form.submit();" })
             </span>
-            <span>
-                @Html.DropDownList("kieudh", null, "Kiểu đồng hồ", new { @class = "Filter", @onchange = "this.form.submit();" })
-            </span>
         </div>
-        @*<button type="submit" class="btn btn-primary">Tìm kiếm</button>*@
         <div style="background-color:#f5f5f5; position:relative;text-align:center;">
             <h2 style="font-variant-caps:normal; color:darkslategray;padding-top:5px;padding-bottom:3px;">Đồng Hồ @ViewBag.SexSearch @ViewBag.THSearch</h2>
             <div style="position:absolute; right:50px; bottom:10px; width:100px; height:20px; font-size:16px;text-align:center">
@@ -74,8 +70,7 @@
     !string.IsNullOrEmpty(ViewBag.THSearch) ||
     !string.IsNullOrEmpty(ViewBag.CurrentSort) ||
     !string.IsNullOrEmpty(ViewBag.currentGia) ||
-    !string.IsNullOrEmpty(ViewBag.currentLoaiDH) ||
-    !string.IsNullOrEmpty(ViewBag.currentKieuDH)
+    !string.IsNullOrEmpty(ViewBag.currentLoaiDH)
     )
         {
             <div>
@@ -96,13 +91,7 @@
                     <button class="btn btn-primary">
                         @ViewBag.currentLoaiDH <i class="fas fa-times"></i>
                     </button>
-                }
-                @if (!string.IsNullOrEmpty(ViewBag.currentKieuDH))
-                {
-                    <button class="btn btn-primary">
-                        @ViewBag.currentKieuDH <i class="fas fa-times"></i>
-                    </button>
-                }
+                }              
                 @if (!string.IsNullOrEmpty(ViewBag.CurrentSort))
                 {
                     <button class="btn btn-primary">
@@ -213,7 +202,7 @@
     <br />
     <div class="col-md-4 offset-8">
         Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
     </div>
 }
 else

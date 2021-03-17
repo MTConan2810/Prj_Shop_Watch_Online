@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using NPOI.XSSF.UserModel;
 using Prj_Shop_Watch_Online.Models;
 
 namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
@@ -28,8 +29,8 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         }
         public ActionResult WirteExcel()
         {
-            var wb = new HSSFWorkbook();
-            //XSSFWorkbook wb = new XSSFWorkbook();
+            //var wb = new HSSFWorkbook();
+            XSSFWorkbook wb = new XSSFWorkbook();
             var listOrder = db.Orders.ToList();
             var listOrderDetail = db.OrderDetail.ToList();
             //tạo sheet 1
@@ -107,7 +108,7 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             }
 
             // save file
-            string fPath = Path.GetFileName("BaoCao.xls");
+            string fPath = Path.GetFileName("BaoCao.xlsx");
             string UploadFile = Server.MapPath("~/wwwroot/") + fPath;
             //string test = Server.MapPath("/wwwroot") + "\\" + fPath;
             using (FileStream fs = new FileStream(UploadFile, FileMode.Create, FileAccess.Write, FileShare.None))
