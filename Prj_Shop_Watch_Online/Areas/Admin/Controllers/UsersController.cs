@@ -75,13 +75,21 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users,string comfirmpass)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(users);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if(comfirmpass.Equals(users.Password))
+                {
+                    db.Users.Add(users);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Edit", new { id = users.Id });
+                }
+                else
+                {
+                    ViewBag.thongbao = "Xác nhận lại mật khẩu!";
+                    return View(users);
+                }
             }
 
             return View(users);

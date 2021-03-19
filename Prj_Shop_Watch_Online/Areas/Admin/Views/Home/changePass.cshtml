@@ -1,0 +1,83 @@
+﻿@model Prj_Shop_Watch_Online.Models.Users
+
+@{
+    ViewBag.Title = "Đổi mật khẩu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h1 class="h3 mb-2 text-gray-800">Tài Khoản</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Đổi mật khẩu</h2>
+        <p>Tài khoản: @Model.Username</p>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 offset-3">
+                <h4>Tài khoản: @Model.FullName</h4>
+                <hr />
+                <label>Tên tài khoản: @Model.Username</label>
+                <br />
+                <label>Họ và tên: @Model.FullName</label>
+                <br />
+                <label>Email: @Model.Email</label>
+                <br />
+                @using (Html.BeginForm("changePass", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.HiddenFor(model => model.Id)
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="Password">Mật khẩu cũ</label>
+                            <div class="col-md-9">
+                                <input class="form-control text-box single-line password" data-val="true" data-val-length="Tối thiểu 3 kí tự,Tối đa 20 kí tự" data-val-length-max="20" data-val-length-min="3" data-val-required="Mật khẩu cũ không được để trống" id="Password" name="Password" type="password">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="passwordnew">Mật khẩu mới</label>
+                            <div class="col-md-9">
+                                <input class="form-control text-box single-line password" data-val="true" data-val-length="Tối thiểu 3 kí tự,Tối đa 20 kí tự" data-val-length-max="20" data-val-length-min="3" data-val-required="Mật khẩu mới không được để trống" id="passwordnew" name="passwordnew" type="password">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="passwordnew" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="comfirmpass">Xác nhận mật khẩu</label>
+                            <div class="col-md-9">
+                                <input class="form-control text-box single-line password" data-val="true" data-val-required="Mật khẩu mới không được để trống" id="comfirmpass" name="comfirmpass" type="password" onchange="confirmpassword()">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="comfirmpass" data-valmsg-replace="true"></span>
+                                <span class="text-danger"><span id="confirmerror"></span></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Đổi mật khẩu" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.error != null)
+                {
+                    <br />
+                    <div class="alert alert-danger text-center" role="alert" style="color:red">@ViewBag.error</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+        <script>
+            confirmpassword = function () {
+                var pass = document.getElementById('passwordnew').value;
+                var copass = document.getElementById('comfirmpass').value;
+                if (copass != pass) {
+                    document.getElementById('confirmerror').innerHTML = "Mật khẩu không trùng khớp";
+                }
+                else {
+                    document.getElementById('confirmerror').innerHTML = "";
+                }
+            };
+        </script>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

@@ -1,0 +1,53 @@
+﻿@model Prj_Shop_Watch_Online.Models.Users
+
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <ol class="breadcrumb breadcrumb-instro">
+        <li class="breadcrumb-item"><a href="/"><i class="fa fa-forward" aria-hidden="true"></i>Trang chủ</a></li>
+        <li class="breadcrumb-item active">Thông tin tài khoản</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <h4 class="text-center" style="background-color:aquamarine;">Thông tin</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Note)
+            </dd>
+        </dl>
+    </div> 
+</div>
+

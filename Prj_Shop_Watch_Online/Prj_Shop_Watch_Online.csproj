@@ -2235,6 +2235,8 @@
     <Content Include="Areas\Admin\Views\Comments\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Comments\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ProfileUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\changePass.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2268,6 +2270,9 @@
     <Content Include="Views\Home\_CartView.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Home\_Comments.cshtml" />
+    <Content Include="Views\Cart\Sucess.cshtml" />
+    <Content Include="Views\Account\changePass.cshtml" />
+    <Content Include="Views\Account\ProfileUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
