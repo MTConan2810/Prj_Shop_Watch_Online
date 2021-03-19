@@ -23,23 +23,32 @@ namespace Prj_Shop_Watch_Online.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Active")] Users users)
+        public async Task<ActionResult> Register([Bind(Include = "Id,Username,Password,FullName,Email,Active")] Users users,string confirmpassword)
         {
             var tkcheck = db.Users.Where(tk => tk.Email == users.Email || tk.Username.ToUpper() == users.Username.ToUpper());
             if (tkcheck.Count() == 0)
             {
                 if (ModelState.IsValid)
                 {
-                    if(users.Active == true)
+                    if(confirmpassword.Equals(users.Password))
                     {
-                        db.Users.Add(users);
-                        await db.SaveChangesAsync();                        
+                        if (users.Active == true)
+                        {
+                            db.Users.Add(users);
+                            await db.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            ViewBag.thongbao = "Bạn vui lòng đồng ý với chính sách và điều khoản sử dụng";
+                            return View(users);
+                        }
                     }
                     else
                     {
-                        ViewBag.thongbao = "Bạn vui lòng đồng ý với chính sách và điều khoản sử dụng";
+                        ViewBag.thongbao = "Xác nhận lại mật khẩu!";
                         return View(users);
                     }
+                    
                 }
                 return RedirectToAction("Login");   
             }
@@ -92,10 +101,7 @@ namespace Prj_Shop_Watch_Online.Controllers
             return RedirectToAction("Login");
         }
         
-       
-
-        // GET: Account/Edit/5
-        public async Task<ActionResult> DoiPass(int? id)
+        public async Task<ActionResult> ProfileUser(int? id)
         {
             if (id == null)
             {
@@ -109,20 +115,53 @@ namespace Prj_Shop_Watch_Online.Controllers
             return View(users);
         }
 
-        // POST: Account/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DoiPass([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users)
+        // GET: Account/Edit/5
+        public async Task<ActionResult> changePass(int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Entry(users).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = await db.Users.FindAsync(id);
+            if (users == null)
+            {
+                return HttpNotFound();
             }
             return View(users);
-        }    
+        }
+        [HttpPost]
+        public async Task<ActionResult> changePass(int Id, string Password, string passwordnew, string comfirmpass)
+        {
+            Users users = await db.Users.FindAsync(Id);
+            if(Password.Equals(users.Password))
+            {        
+                if(!passwordnew.Equals(users.Password))
+                {
+                    if(comfirmpass.Equals(passwordnew))
+                    {
+                        users.Password = passwordnew;
+                        await db.SaveChangesAsync();
+                        Session["idUser"] = null;
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        ViewBag.error = "xác nhận lại mật khẩu!";
+                        return View(users);
+                    }
+                }
+                else
+                {
+                    ViewBag.error = "Mật khẩu mới trùng với mật khẩu cũ";
+                    return View(users);
+                }
+                                 
+            }
+            else
+            {
+                ViewBag.error = "Mật khẩu cũ không đúng";
+                return View(users);
+            }
+        }
     }
 }

@@ -201,7 +201,11 @@ namespace Prj_Shop_Watch_Online.Controllers
                 ViewBag.error = "Không thành công" + ex.ToString();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Sucess");
+        }
+        public ActionResult Sucess()
+        {
+            return View();
         }
     }
 }

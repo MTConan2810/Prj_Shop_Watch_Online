@@ -1,0 +1,56 @@
+﻿@model Prj_Shop_Watch_Online.Models.Users
+@{
+    ViewBag.Title = "Thông tin tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h1 class="h3 mb-2 text-gray-800">Tài Khoản</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h2>Hồ sơ</h2>
+        <p>Tài khoản: @Model.Username</p>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <h4 class="text-center" style="background-color:aquamarine;">Thông tin</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FullName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Note)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Note)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+

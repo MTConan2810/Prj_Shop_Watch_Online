@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using NPOI.HSSF.UserModel;
@@ -180,6 +182,67 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             Session.Clear();
             return RedirectToAction("Login");
         }
+        public async Task<ActionResult> ProfileUser(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = await db.Users.FindAsync(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            return View(users);
+        }
 
+        // GET: Account/Edit/5
+        public async Task<ActionResult> changePass(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = await db.Users.FindAsync(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            return View(users);
+        }
+        [HttpPost]
+        public async Task<ActionResult> changePass(int Id, string Password, string passwordnew, string comfirmpass)
+        {
+            Users users = await db.Users.FindAsync(Id);
+            if (Password.Equals(users.Password))
+            {
+                if (!passwordnew.Equals(users.Password))
+                {
+                    if (comfirmpass.Equals(passwordnew))
+                    {
+                        users.Password = passwordnew;
+                        await db.SaveChangesAsync();
+                        Session["UserID"] = null;
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        ViewBag.error = "xác nhận lại mật khẩu!";
+                        return View(users);
+                    }
+                }
+                else
+                {
+                    ViewBag.error = "Mật khẩu mới trùng với mật khẩu cũ";
+                    return View(users);
+                }
+
+            }
+            else
+            {
+                ViewBag.error = "Mật khẩu cũ không đúng";
+                return View(users);
+            }
+        }
     }
 }

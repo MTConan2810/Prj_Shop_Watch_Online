@@ -40,8 +40,8 @@
                                                 <button class="btn" style="font-style:italic;font-variant-caps:all-petite-caps;color:yellow;width:120px;border:1px solid yellow; border-radius:8px;">@Session["HoTenUI"] &nbsp; <i class="fas fa-user"></i></button>
                                             </div>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Hồ sơ</a>
-                                                <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                                                <a class="dropdown-item" href="@Url.Action("ProfileUser","Account",new {id =(int)Session["idUser"]})">Hồ sơ</a>
+                                                <a class="dropdown-item" href="@Url.Action("changePass","Account",new {id =(int)Session["idUser"]})">Đổi mật khẩu</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="@Url.Action("Logout","Account")"><i class="fas fa-sign-out-alt"></i> &nbsp; Đăng xuất</a>
                                             </div>
