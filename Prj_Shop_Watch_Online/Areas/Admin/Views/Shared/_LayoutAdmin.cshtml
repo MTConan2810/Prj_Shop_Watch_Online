@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Quản lí Galle</title>
+    <title>@ViewBag.Title - Quản lý Galle</title>
 
 
     <!-- Custom fonts for this template-->
@@ -40,7 +40,7 @@
                         <img src="~/favicon.ico" />
                     </i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Galle <sup>Quản lí</sup></div>
+                <div class="sidebar-brand-text mx-3">Galle <sup>Quản lý</sup></div>
             </a>
 
             <!-- Divider -->
@@ -60,7 +60,7 @@
             {
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Quản lí Tài khoản
+                    Quản lý Tài khoản
                 </div>
 
                 <!-- Nav Item - User & UserGroupRole -->
@@ -72,7 +72,7 @@
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản lí tài khoản</h6>
+                            <h6 class="collapse-header">Quản lý tài khoản</h6>
                             <a class="collapse-item" href="@Url.Action("Index","Users", new {groupcode = "NV" })">Nhân viên</a>
                             <a class="collapse-item" href="@Url.Action("Index","Users", new {groupcode = "KH" })">Khách hàng</a>
                             <div class="collapse-divider"></div>
@@ -92,8 +92,7 @@
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Cài đặt</h6>
-                            <a class="collapse-item" href="@Url.Action("Index","AppLists")">Các ứng dụng</a>
-                            <a class="collapse-item" href="@Url.Action("Index","AppGroupRoles")">Chức năng</a>
+                            <a class="collapse-item" href="@Url.Action("Index","AppLists")">Các ứng dụng</a>                            
                             <a class="collapse-item" href="@Url.Action("Index","AppGroupRoles")">Phân quyền</a>
                         </div>
                     </div>
@@ -106,13 +105,13 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Quản lí
+                Quản lý
             </div>
             <!-- Nav Item - Brand -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Brands")">
                     <i class="fas fa-fw fa-list-alt"></i>
-                    <span>Quản lí Thương hiệu</span>
+                    <span>Quản lý Thương hiệu</span>
                 </a>
             </li>
             <!-- Nav Item - Sản phẩm -->
@@ -120,7 +119,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fab fa-fw fa-product-hunt"></i>
-                    <span>Quản lí sản phẩm</span>
+                    <span>Quản lý sản phẩm</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -141,28 +140,28 @@
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Promotions")">
                     <i class="fas fa-fw fa-gift"></i>
-                    <span>Quản lí Khuyến mãi</span>
+                    <span>Quản lý Khuyến mãi</span>
                 </a>
             </li>
             <!-- Nav Item - Comments -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Comments")">
                     <i class="far fa-fw fa-comments"></i>
-                    <span>Quản lí Bình luận</span>
+                    <span>Quản lý Bình luận</span>
                 </a>
             </li>
             <!-- Nav Item - Orders -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Orders")">
                     <i class="far fa-fw fa-clipboard"></i>
-                    <span>Quản lí Đơn hàng</span>
+                    <span>Quản lý Đơn hàng</span>
                 </a>
             </li>
             <!-- Nav Item - Showroom -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Index","Shops")">
                     <i class="fas fa-fw fa-store-alt"></i>
-                    <span>Quản lí Showrooms</span>
+                    <span>Quản lý Showrooms</span>
                 </a>
             </li>
             <!-- Divider -->
