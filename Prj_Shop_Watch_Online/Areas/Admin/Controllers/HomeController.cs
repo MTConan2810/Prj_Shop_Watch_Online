@@ -138,11 +138,7 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                 var user = db.Users.Where(u => u.Username.ToUpper().Equals(Username.ToUpper()) && u.Password.Equals(Password)).ToList();
                 if (user.Count() > 0)
                 {
-                    //add session
-                    Session["UserName"] = user.FirstOrDefault().Username;
-                    Session["HoTen"] = user.FirstOrDefault().FullName;
-                    Session["Email"] = user.FirstOrDefault().Email;
-                    Session["UserID"] = user.FirstOrDefault().Id;
+                    
                     var checkRole = db.UserGroupRole.Where(ur => ur.Username.ToUpper().Equals(Username.ToUpper())).ToList();
                     if(user.FirstOrDefault().Active == true)
                     {
@@ -152,7 +148,13 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                             {
                                 Session["Role"] = item.GroupCode;                               
                                 if (item.GroupCode.Equals("ADMIN") || item.GroupCode.Equals("NV"))
-                                {                                  
+                                {
+                                    //add session
+                                    Session["UserName"] = user.FirstOrDefault().Username;
+                                    Session["HoTen"] = user.FirstOrDefault().FullName;
+                                    Session["Email"] = user.FirstOrDefault().Email;
+                                    Session["UserID"] = user.FirstOrDefault().Id;
+
                                     return RedirectToAction("Index", "Home");
                                 }
                                 

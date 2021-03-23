@@ -74,12 +74,14 @@ namespace Prj_Shop_Watch_Online.Controllers
                 var user = db.Users.Where(u => u.Username.ToUpper().Equals(Username.ToUpper()) && u.Password.Equals(Password)).ToList();
                 if (user.Count() > 0)
                 {
-                    //add session
-                    Session["HoTenUI"] = user.FirstOrDefault().FullName;
-                    Session["EmailUI"] = user.FirstOrDefault().Email;
-                    Session["idUser"] = user.FirstOrDefault().Id;
+                    
                     if(user.FirstOrDefault().Active == true)
                     {
+                        //add session
+                        Session["HoTenUI"] = user.FirstOrDefault().FullName;
+                        Session["EmailUI"] = user.FirstOrDefault().Email;
+                        Session["idUser"] = user.FirstOrDefault().Id;
+
                         return RedirectToAction("Index", "Home");
                     }
                     else
