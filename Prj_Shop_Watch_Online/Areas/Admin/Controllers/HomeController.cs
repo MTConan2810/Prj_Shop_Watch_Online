@@ -146,9 +146,10 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                         {
                             foreach (var item in checkRole)
                             {
-                                Session["Role"] = item.GroupCode;                               
+                                                               
                                 if (item.GroupCode.Equals("ADMIN") || item.GroupCode.Equals("NV"))
                                 {
+                                    Session["Role"] = item.GroupCode;
                                     //add session
                                     Session["UserName"] = user.FirstOrDefault().Username;
                                     Session["HoTen"] = user.FirstOrDefault().FullName;
