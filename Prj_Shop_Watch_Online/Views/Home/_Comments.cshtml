@@ -4,7 +4,8 @@
 
 <div>
     @foreach (var item in Model)
-    {
+     {
+            ViewBag.Id = item.ProductId;
         <hr />
         <h3><i class="fas fa-user"></i>&nbsp; @Html.DisplayFor(model => item.Users.FullName)</h3>
         <h4>
@@ -17,7 +18,7 @@
     <div class="text-center">
         <br />
         Trang @(Model.PageCount<Model.PageNumber?0:Model.PageNumber)/@Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("_Comments", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("ProductDetails/"+ ViewBag.Id, new { page }))
     </div>
     
 </div>

@@ -74,6 +74,9 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                     string FileName = Path.GetFileName(f.FileName);
                     string UpLoadFile = Server.MapPath("~/wwwroot/ImageShop/") + FileName;
                     f.SaveAs(UpLoadFile);
+                    //using (var bits = new FileStream(UpLoadFile,FileMode.Create)) {
+                    //    await f.InputStream.CopyToAsync(bits);                       
+                    //}
                     shops.ImageShop = FileName;
                 }
                 db.Shops.Add(shops);
