@@ -40,15 +40,15 @@
 <div class="row clearfix">
     @foreach (var item in Model)
     {
-        <div class="col-md-12 item col-xs-6 post-scroll" style="min-height:270px">
+        <div class="col-md-12 item col-xs-6 post-scroll" id="Image-Shop">
             <div class="col-md-5">
                 @{
                     string ImagePath = "~/wwwroot/ImageShop/" + item.ImageShop;
                 }
-                <img src="@Url.Content(ImagePath)" width="450" height="250" />
+                <img src="@Url.Content(ImagePath)" />
             </div>
             <div class="col-md-7">
-                <dl class="dl-horizontal" style="margin-left:-90px;">
+                <dl class="dl-horizontal" id="Detail-Shop">
                     <dt>
                         Chi nhánh:
                     </dt>

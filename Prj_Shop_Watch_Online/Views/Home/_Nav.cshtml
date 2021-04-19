@@ -7,13 +7,16 @@
                 <i class="fas fa-home fa-lg" id="nav-name"></i>
             </span>
         </a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" onclick="myFunction()">
+            <span><i class="fas fa-bars fa-lg" style="color:white" id="nav-butter"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" role="button" id="nav-name">
                         THƯƠNG HIỆU
                     </a>
-                    <ul class="dropdown-menu" style="width:1050px;">
+                    <ul class="dropdown-menu" id="dropdown-menu-brand">
                         @foreach (var item in Model)
                         {
                             string ImagePath = "~/wwwroot/ImageBrands/" + item.AnhTH;
@@ -24,12 +27,12 @@
                             </li>
                         }
                         @*<li id="dropId">
-                                <a class="dropdown-item" href="#">Menu 1</a>
-                            </li>
-                            <li id="dropId"><a class="dropdown-item" href="#">Menu item 2</a> </li>
-                            <li id="dropId"><img class="dropdown-item" alt="là ảnh" width:"50px" /></li>
-                            <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Menu 3 ...</a></li>*@
+                            <a class="dropdown-item" href="#">Menu 1</a>
+                        </li>
+                        <li id="dropId"><a class="dropdown-item" href="#">Menu item 2</a> </li>
+                        <li id="dropId"><img class="dropdown-item" alt="là ảnh" width:"50px" /></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Menu 3 ...</a></li>*@
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -54,7 +57,7 @@
                 </li>
                 <li class="nav-item" style="margin-top:-10px;">
                     <a class="btn" role="button" style="color:yellow; font-size:16px;">
-                        <span><i class="fas fa-phone-volume"></i> 1800 6785 (miễn phí)</span>/                     
+                        <span><i class="fas fa-phone-volume"></i> 1800 6785 (miễn phí)</span>/
                         <span><i class="fas fa-envelope"></i> info@galle.vn</span>
                     </a>
                 </li>
@@ -66,3 +69,16 @@
     </div>
 </nav>
 
+<script>
+    function myFunction() {
+        var x = document.getElementById("navbarSupportedContent");
+        var y = document.getElementById("nav-butter");
+        if (x.className === "collapse navbar-collapse") {
+            x.className += " show";
+            y.className = "fas fa-window-close fa-lg";
+        } else {
+            x.className = "collapse navbar-collapse";
+            y.className = "fas fa-bars fa-lg";
+        }       
+    }
+</script>

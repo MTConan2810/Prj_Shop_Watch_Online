@@ -60,10 +60,10 @@
                 @Html.DropDownList("loaidh", null, "Loại đồng hồ", new { @class = "Filter", @onchange = "this.form.submit();" })
             </span>
         </div>
-        <div style="background-color:#f5f5f5; position:relative;text-align:center;">
+        <div id="title-product">
             <h2 style="font-variant-caps:normal; color:darkslategray;padding-top:5px;padding-bottom:3px;">Đồng Hồ @ViewBag.SexSearch @ViewBag.THSearch</h2>
-            <div style="position:absolute; right:50px; bottom:10px; width:100px; height:20px; font-size:16px;text-align:center">
-                @Html.DropDownList("sortOder", null, "Sắp xếp theo", new { @style = "background-color: white; border: 1px solid #b3b3b3; border-radius: 8px;", @onchange = "this.form.submit();" })
+            <div id="sort-product">
+                @Html.DropDownList("sortOder", null, "Sắp xếp theo", new { @style = "background-color: white; border: 1px solid #b3b3b3; border-radius: 8px; cursor:pointer;", @onchange = "this.form.submit();" })
             </div>
         </div>
         @if (

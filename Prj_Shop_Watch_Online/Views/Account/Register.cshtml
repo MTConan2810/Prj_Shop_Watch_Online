@@ -80,14 +80,14 @@
             </div>
             <div class="form-bottom">
                 <div class="row clearfix">
-                    <div class="col-md-2 offset-3" style="text-align:right;margin-top:-10px; margin-right:-25px;">
+                    <div class="col-md-2 offset-3" id="Agree-Active">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.Active)
                             @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-6">
-                        Tôi đồng ý với <a target="blank" href="#">Chính sách &amp; Điều khoản sử dụng</a>
+                        <label for="Active">Tôi đồng ý với <a target="blank" href="#">Chính sách &amp; Điều khoản sử dụng</a></label>
                     </div>
                 </div>
                 <div style="text-align:center">
