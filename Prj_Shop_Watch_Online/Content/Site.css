@@ -488,7 +488,7 @@ button span.fa-angle-up {
     #cart-view {
         position: relative;
         color: yellow;
-        top:-60px;
+        top:-40px;
     }
     #subheader {
         left:-80px;
@@ -556,5 +556,8 @@ button span.fa-angle-up {
     }
     #cart-screen{
         max-width:400px;
-    }    
+    }
+    #acc-menu{
+        left:95px;
+    }
 }
