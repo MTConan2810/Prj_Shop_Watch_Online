@@ -491,6 +491,7 @@ button span.fa-angle-up {
         top:-40px;
     }
     #subheader {
+        display:none;
         left:-80px;
         margin-top:10px;
         margin-bottom:100px;
@@ -498,7 +499,8 @@ button span.fa-angle-up {
         font-family: 'UTM French Vanilla';
         color: #FFF200;
     }
-        #subheader ul li {          
+        #subheader ul li {
+            width: 200px;
             list-style-type: none;
         }
         #subheader ul li span i{
@@ -559,5 +561,8 @@ button span.fa-angle-up {
     }
     #acc-menu{
         left:95px;
+    }
+    #profile-user{
+        margin-left:0px;
     }
 }
