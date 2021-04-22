@@ -154,8 +154,8 @@
         <div class="container">
             <div class="row clearfix">
                 <div class="col-md-2 text-left">
-                    <h4 class="footer-title">VỀ CHÚNG TÔI</h4>
-                    <ul class="footer-title-ul">
+                    <h4 class="footer-title">VỀ CHÚNG TÔI <span class="plus-footer"><i class="fas fa-plus fa-lg" id="plus-footer-1" onclick="showFooterRes(1)"></i></span></h4>
+                    <ul class="footer-title-ul" id="show-footer-1">
                         <li><a href="/">Galle Watch</a></li>
                         <li><a href="#">Triết lý kinh doanh</a></li>
                         <li><a href="#">Truyền thông & sự kiện </a></li>
@@ -165,8 +165,8 @@
                     </ul>
                 </div>
                 <div class="col-md-3 text-left">
-                    <h4 class="footer-title">TIN TỨC</h4>
-                    <ul class="footer-title-ul">
+                    <h4 class="footer-title">TIN TỨC <span class="plus-footer" ><i class="fas fa-plus fa-lg" id="plus-footer-2" onclick="showFooterRes(2)"></i></span></h4>
+                    <ul class="footer-title-ul" id="show-footer-2">
                         <li><a href="/">Review sản phẩm</a></li>
                         <li><a href="#">Tin tức đồng hồ</a></li>
                         <li><a href="#">Chứng nhận thương hiệu</a></li>
@@ -175,8 +175,8 @@
                     </ul>
                 </div>
                 <div class="col-md-4 text-left">
-                    <h4 class="footer-title">CHÍNH SÁCH SAU BÁN HÀNG</h4>
-                    <ul class="footer-title-ul">
+                    <h4 class="footer-title">CHÍNH SÁCH SAU BÁN HÀNG <span class="plus-footer" ><i class="fas fa-plus fa-lg" id="plus-footer-3" onclick="showFooterRes(3)"></i></span></h4>
+                    <ul class="footer-title-ul" id="show-footer-3">
                         <li><a href="/">Chính sách bảo hành</a></li>
                         <li><a href="#">Chính sách thay Pin miễn phí trọn đời</a></li>
                         <li><a href="#">Chính sách vận chuyển miễn phí</a></li>
@@ -186,8 +186,8 @@
                     </ul>
                 </div>
                 <div class="col-md-3 text-left">
-                    <h4 class="footer-title">HƯỚNG DẪN & TƯ VẤN</h4>
-                    <ul class="footer-title-ul">
+                    <h4 class="footer-title">HƯỚNG DẪN & TƯ VẤN <span class="plus-footer" ><i class="fas fa-plus fa-lg" id="plus-footer-4" onclick="showFooterRes(4)"></i></span></h4>
+                    <ul class="footer-title-ul" id="show-footer-4">
                         <li><a href="/">Hướng dẫn mua hàng</a></li>
                         <li><a href="#">Hướng dẫn thanh toán</a></li>
                         <li><a href="#">Hướng dẫn sử dụng</a></li>
@@ -197,9 +197,9 @@
                 </div>
 
             </div>
-            <div class="row clearfix" style="min-height:250px;">
-                <div class="col-md-6 text-left">
-                    <h4 class="footer-title">THÔNG TIN LIÊN HỆ</h4>
+            <div class="row clearfix " style="min-height:250px;">
+                <div class="col-md-6 text-left" id="footer-info">
+                    <h4 class="footer-titlea">THÔNG TIN LIÊN HỆ</h4>
                     <p style="color:#b1b1b1;">
                         Quyền sở hữu &amp; Bản quyền Website này thuộc:<br>
                         <strong>CÔNG TY PHÂN PHỐI SẢN PHẨM CAO CẤP LPD</strong><br>
@@ -209,8 +209,8 @@
                         Website: https://galle.vn
                     </p>
                 </div>
-                <div class="col-md-4 text-left">
-                    <h4 class="footer-title">KẾT NỐI VỚI GALLE WATCH</h4>
+                <div class="col-md-4 text-left" id="footer-info">
+                    <h4 class="footer-titlea">KẾT NỐI VỚI GALLE WATCH</h4>
                     <div>
                         <a href="#">
                             <span><i class="fab fa-facebook-square fa-2x" style="color:blueviolet"></i></span>
@@ -230,7 +230,19 @@
                     </div>
                 </div>
             </div>
-            
+            <script>
+                function showFooterRes(idplus) {
+                    var y = document.getElementById("plus-footer-" + idplus);
+                    var x = document.getElementById("show-footer-" + idplus);
+                    if (x.className === "footer-title-ul") {
+                        x.className += " show-footer";
+                        y.className = "fas fa-minus fa-lg";
+                    } else {
+                        x.className = "footer-title-ul";
+                        y.className = "fas fa-plus fa-lg";
+                    }
+                }
+            </script>
         </div>
     </footer>
     <script src="~/Scripts/js-image-slider.js" type="text/javascript"></script>
