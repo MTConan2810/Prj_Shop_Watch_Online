@@ -165,6 +165,7 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1892,6 +1893,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\js-image-slider.js" />
+    <Content Include="wwwroot\401.png" />
+    <Content Include="wwwroot\404.png" />
+    <Content Include="wwwroot\500.png" />
     <Content Include="wwwroot\ImageBrands\800px-rado_uhrenmarke_logosvg_1500971861-min_1519293413.png" />
     <Content Include="wwwroot\ImageBrands\al_1476774643.png" />
     <Content Include="wwwroot\ImageBrands\ber_1476775793.png" />
@@ -2273,6 +2277,10 @@
     <Content Include="Views\Cart\Sucess.cshtml" />
     <Content Include="Views\Account\changePass.cshtml" />
     <Content Include="Views\Account\ProfileUser.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\Error500.cshtml" />
+    <Content Include="Views\Error\Error400.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

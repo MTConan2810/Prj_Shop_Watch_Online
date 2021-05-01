@@ -107,12 +107,12 @@ namespace Prj_Shop_Watch_Online.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Redirect("~/Error/Error400");
             }
             Users users = await db.Users.FindAsync(id);
             if (users == null)
             {
-                return HttpNotFound();
+                return Redirect("~/Error/Error404");
             }
             return View(users);
         }
@@ -122,12 +122,12 @@ namespace Prj_Shop_Watch_Online.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Redirect("~/Error/Error400");
             }
             Users users = await db.Users.FindAsync(id);
             if (users == null)
             {
-                return HttpNotFound();
+                return Redirect("~/Error/Error404");
             }
             return View(users);
         }

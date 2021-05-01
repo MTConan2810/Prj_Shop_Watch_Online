@@ -156,6 +156,10 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
                                     Session["Email"] = user.FirstOrDefault().Email;
                                     Session["UserID"] = user.FirstOrDefault().Id;
 
+                                    if(string.IsNullOrEmpty(Session["Role"].ToString()))
+                                    {
+                                        return RedirectToAction("Login", "Home");
+                                    }
                                     return RedirectToAction("Index", "Home");
                                 }
                                 

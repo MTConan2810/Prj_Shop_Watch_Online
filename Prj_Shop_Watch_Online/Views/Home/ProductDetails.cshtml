@@ -1,7 +1,7 @@
 ﻿@model Prj_Shop_Watch_Online.Models.Products
 @using Prj_Shop_Watch_Online.Models
 @{
-    ViewBag.Title = "ProductDetails";
+    ViewBag.Title = "Chi tiết";
     Layout = "~/Views/Shared/_Layout.cshtml";
     SWODBContext db = new SWODBContext();
     var checkkm = from km in db.Promotions where km.Status == true select km;
