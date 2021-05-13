@@ -2241,6 +2241,7 @@
     <Content Include="Areas\Admin\Views\Home\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Home\ProfileUser.cshtml" />
     <Content Include="Areas\Admin\Views\Home\changePass.cshtml" />
+    <None Include="Properties\PublishProfiles\Prj_SWO.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
