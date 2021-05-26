@@ -265,8 +265,8 @@
                                     productId: productId,
                                     quantity: changeq + 1
                                 },
-                                success: function (result) {
-                                    window.location.href = "/Cart";
+                              success: function (result) {
+                                  window.location.reload();
                                 }
                             });
                     });
@@ -285,7 +285,7 @@
                                 quantity: changeq - 1
                             },
                             success: function (result) {
-                                window.location.href = "@Url.Action("Index","Cart")";
+                                window.location.reload();
                             }
                         });
                     });
@@ -314,7 +314,7 @@
                                 quantity: value
                             },
                             success: function (result) {
-                                window.location.href = "@Url.Action("Index","Cart")";
+                                window.location.reload();
                             }
                         });
                     });
