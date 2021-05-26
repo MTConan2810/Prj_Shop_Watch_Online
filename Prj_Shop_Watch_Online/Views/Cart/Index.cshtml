@@ -37,7 +37,7 @@
         int stt = 1;
         decimal total = 0;
         decimal? giakm = 0;
-    <div class="table-responsive">
+    <div class="table-responsive col-md-7">
         <table class="table table-hover" id="table-cart">
             <thead class="table-success text-center" >
                 <tr>
@@ -54,8 +54,8 @@
                 {
                     var anh = db.ProductImage.Where(s => s.ProductId == item.Products.Id).Select(s => s).ToList();
                     <tr>
-                        <td>@(stt++)</td>
-                        <td>
+                        <td width="20">@(stt++)</td>
+                        <td width="120">
                             @foreach (var obj in anh)
                             {
                                 if (obj.IsDefault == true)
@@ -74,24 +74,43 @@
                             </p>
                             
                         </td>
-                        <td>
-                            <button class="btn btnUpdate" name="productId"
-                                    data-ProductId="@item.Products.Id">
-                                <i class="fas fa-minus"></i>
-                            </button>
+                        <td width="180">
+                            @if (item.quantity <= 1)
+                            {
+                                <button class="btn btnUpdateDesc" name="productId"
+                                        data-ProductId="@item.Products.Id" disabled>
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btnUpdateDesc" name="productId"
+                                        data-ProductId="@item.Products.Id">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            }
+                            <input style="width:35px" type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="@item.Products.SoLuong" class="test-quantity" data-ProductId="@item.Products.Id" />
+                            @if (item.quantity >= item.Products.SoLuong)
+                            {
+                                <button class="btn btnUpdate" name="productId"
+                                        data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")" disabled>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btnUpdate" name="productId"
+                                        data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            }
 
-                            <input width="10" type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="@item.Products.SoLuong"/>
-
-                            <button class="btn btnUpdate" name="productId"
-                                    data-ProductId="@item.Products.Id">
-                                <i class="fas fa-plus"></i>
-                            </button>
                         </td>
                         @if (checkQuyen(item.Products.Id) == false)
                         {
                             giakm = item.Products.Gia * item.quantity;
-                            <td></td>
-                            <td>@String.Format("{0:C}", giakm)</td>
+                            <td width="100"></td>
+                            <td width="140">@String.Format("{0:C}", giakm)</td>
                             total += (decimal)giakm;
                         }
                         @if (kmapplyforall.Count > 0)
@@ -104,16 +123,16 @@
                                     if (km.DiscountPercent != null)
                                     {
                                         giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
-                                        <td>@km.Name</td>
-                                        <td>@String.Format("{0:C}", giakm)</td>
+                                        <td width="100">@km.Name</td>
+                                        <td width="140">@String.Format("{0:C}", giakm)</td>
                                         total += (decimal)giakm;
 
                                     }
                                     else if (km.DiscountAmount != null)
                                     {
                                         giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
-                                        <td>@km.Name</td>
-                                        <td>@String.Format("{0:C}", giakm)</td>
+                                        <td width="100">@km.Name</td>
+                                        <td width="140">@String.Format("{0:C}", giakm)</td>
                                         total += (decimal)giakm;
                                     }
 
@@ -130,16 +149,16 @@
                                     if (km.DiscountPercent != null)
                                     {
                                         giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
-                                        <td>@km.Name</td>
-                                        <td>@String.Format("{0:C}", giakm)</td>
+                                        <td width="100">@km.Name</td>
+                                        <td width="140">@String.Format("{0:C}", giakm)</td>
                                         total += (decimal)giakm;
 
                                     }
                                     else if (km.DiscountAmount != null)
                                     {
                                         giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
-                                        <td>@km.Name</td>
-                                        <td>@String.Format("{0:C}", giakm)</td>
+                                        <td width="100">@km.Name</td>
+                                        <td width="140">@String.Format("{0:C}", giakm)</td>
                                         total += (decimal)giakm;
 
                                     }
@@ -148,7 +167,7 @@
                             }
                         }
 
-                        <td>                           
+                        <td class="text-left">                           
                             <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
                                class="btn btn-danger" id="btnXoa"><i class="far fa-trash-alt fa-1x"></i></a>
                         </td>
@@ -156,7 +175,7 @@
                 }
                 <tr>
                     <td colspan="4" class="text-right">Tổng tiền</td>
-                    <td>@String.Format("{0:C}", total)</td>
+                    <td class="text-left">@String.Format("{0:C}", total)</td>
                     <td></td>
                 </tr>
             </tbody>
@@ -236,19 +255,70 @@
                         event.preventDefault();
                         var productId = $(this).attr("data-productId");
                         var quantity = $("#quantity-" + productId).val();
+                        var changeq = parseInt(quantity, 10);
+
+                        document.getElementById("quantity-" + productId).value = changeq+1;
+                          $.ajax({
+                                type: "POST",
+                                url: "/Cart/UpdateCart",
+                                data: {
+                                    productId: productId,
+                                    quantity: changeq + 1
+                                },
+                                success: function (result) {
+                                    window.location.href = "/Cart";
+                                }
+                            });
+                    });
+                    $(".btnUpdateDesc").click(function (event) {
+                        event.preventDefault();
+                        var productId = $(this).attr("data-productId");
+                        var quantity = $("#quantity-" + productId).val();
+                        var changeq = parseInt(quantity, 10);
+
+                        document.getElementById("quantity-" + productId).value = changeq - 1;
                         $.ajax({
                             type: "POST",
                             url: "/Cart/UpdateCart",
                             data: {
                                 productId: productId,
-                                quantity: quantity
+                                quantity: changeq - 1
                             },
                             success: function (result) {
-                                window.location.href = "/Cart";                               
+                                window.location.href = "@Url.Action("Index","Cart")";
                             }
                         });
                     });
-                });
+                    $(".test-quantity").on('change', function (event) {
+                        event.preventDefault();
+                        var productId = $(this).attr("data-productId");
+                        //var quantity = $("#quantity-" + productId).val();
+                        var checkmax = $("#quantity-" + productId).attr("max");
+                        var checkmin = $("#quantity-" + productId).attr("min");
+                        var max = parseInt(checkmax, 10);
+                        var min = parseInt(checkmin, 10);
+
+                        var value = this.valueAsNumber;
+                        if (value < min) {
+                            value = min;
+                        }
+                        else if (value > max) {
+                            value = max;
+                        }
+                        $(this).value = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Cart/UpdateCart",
+                            data: {
+                                productId: productId,
+                                quantity: value
+                            },
+                            success: function (result) {
+                                window.location.href = "@Url.Action("Index","Cart")";
+                            }
+                        });
+                    });
+                 });
             </script>
         }
     }
