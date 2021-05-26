@@ -85,6 +85,7 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
             else
             {
                 ViewBag.Error = "Sản phẩm đã tồn tại";
+                ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", products.BrandId);
                 return View(products);
             }
             ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", products.BrandId);
