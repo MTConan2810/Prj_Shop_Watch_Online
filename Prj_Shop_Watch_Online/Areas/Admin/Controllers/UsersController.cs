@@ -77,21 +77,29 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Username,Password,FullName,Email,Note,Active")] Users users,string comfirmpass)
         {
-            if (ModelState.IsValid)
+            var usercheck = db.Users.Where(a => a.Username.Equals(users.Username)).ToList();
+            if(usercheck.Count == 0)
             {
-                if(comfirmpass.Equals(users.Password))
+                if (ModelState.IsValid)
                 {
-                    db.Users.Add(users);
-                    await db.SaveChangesAsync();
-                    return RedirectToAction("Edit", new { id = users.Id });
-                }
-                else
-                {
-                    ViewBag.thongbao = "Xác nhận lại mật khẩu!";
-                    return View(users);
+                    if (comfirmpass.Equals(users.Password))
+                    {
+                        db.Users.Add(users);
+                        await db.SaveChangesAsync();
+                        return RedirectToAction("Edit", new { id = users.Id });
+                    }
+                    else
+                    {
+                        ViewBag.thongbao = "Xác nhận lại mật khẩu!";
+                        return View(users);
+                    }
                 }
             }
-
+            else
+            {
+                ViewBag.thongbao = "Tài khoản đã tồn tại!";
+                return View(users);
+            }
             return View(users);
         }
 

@@ -24,7 +24,7 @@
 
         [DisplayName("Mật khẩu"), DataType(DataType.Password)]
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Tối thiểu 3 kí tự,Tối đa 20 kí tự")]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Tối thiểu 8 kí tự,Tối đa 20 kí tự")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Họ tên không được để trống")]

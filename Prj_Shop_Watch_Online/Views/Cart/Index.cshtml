@@ -39,18 +39,17 @@
         decimal? giakm = 0;
     <div class="table-responsive">
         <table class="table table-hover" id="table-cart">
-            <thead class="table-success" >
+            <thead class="table-success text-center" >
                 <tr>
                     <td>STT</td>
                     <td>Ảnh</td>
-                    <td>Sản phẩm</td>
-                    <td>Đơn giá</td>
                     <td>Số lượng</td>
                     <td>Khuyến mãi</td>
                     <td>Thành tiền</td>
+                    <td></td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 @foreach (var item in Model)
                 {
                     var anh = db.ProductImage.Where(s => s.ProductId == item.Products.Id).Select(s => s).ToList();
@@ -62,17 +61,32 @@
                                 if (obj.IsDefault == true)
                                 {
                                     string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
-                                    <img src="@Url.Content(ImagePath)" alt="@obj.Caption" width="70" height="100" title="@obj.Caption" />
+                                    <img class="img-thumbnail" src="@Url.Content(ImagePath)" alt="@obj.Caption" width="100" height="100" title="@obj.Caption" />
                                 }
 
                             }
-
+                            <p></p>
+                            <p>
+                                @Html.DisplayFor(model => item.Products.TenSp) @Html.DisplayFor(model => item.Products.MaSp)                           
+                            </p>
+                            <p>
+                                @String.Format("{0:C}", item.Products.Gia)
+                            </p>
+                            
                         </td>
                         <td>
-                            @Html.DisplayFor(model => item.Products.TenSp) @Html.DisplayFor(model => item.Products.MaSp)
+                            <button class="btn btnUpdate" name="productId"
+                                    data-ProductId="@item.Products.Id">
+                                <i class="fas fa-minus"></i>
+                            </button>
+
+                            <input width="10" type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="@item.Products.SoLuong"/>
+
+                            <button class="btn btnUpdate" name="productId"
+                                    data-ProductId="@item.Products.Id">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </td>
-                        <td>@String.Format("{0:C}", item.Products.Gia)</td>
-                        <td><input type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="100" /></td>
                         @if (checkQuyen(item.Products.Id) == false)
                         {
                             giakm = item.Products.Gia * item.quantity;
@@ -134,18 +148,14 @@
                             }
                         }
 
-                        <td>
-                            <button class="btn btn-success btnUpdate" name="productId"
-                                    data-ProductId="@item.Products.Id">
-                                Cập nhật
-                            </button>
+                        <td>                           
                             <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
-                               class="btn btn-danger" id="btnXoa">Xóa</a>
+                               class="btn btn-danger" id="btnXoa"><i class="far fa-trash-alt fa-1x"></i></a>
                         </td>
                     </tr>
                 }
                 <tr>
-                    <td colspan="6" class="text-right">Tổng tiền</td>
+                    <td colspan="4" class="text-right">Tổng tiền</td>
                     <td>@String.Format("{0:C}", total)</td>
                     <td></td>
                 </tr>

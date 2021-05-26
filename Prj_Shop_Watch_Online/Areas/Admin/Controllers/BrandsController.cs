@@ -65,22 +65,30 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,TenTH,AnhTH,Active,MoTa")] Brands brands)
         {
-            if (ModelState.IsValid)
+            var brandcheck = db.Brands.Where(a => a.TenTH.Equals(brands.TenTH)).ToList();
+            if(brandcheck.Count == 0)
             {
-                brands.AnhTH = "";
-                var f = Request.Files["ImageFile"];
-                if (f != null && f.ContentLength > 0)
+                if (ModelState.IsValid)
                 {
-                    string FileName = Path.GetFileName(f.FileName);
-                    string UpLoadFile = Server.MapPath("~/wwwroot/ImageBrands/") + FileName;
-                    f.SaveAs(UpLoadFile);
-                    brands.AnhTH = FileName;
+                    brands.AnhTH = "";
+                    var f = Request.Files["ImageFile"];
+                    if (f != null && f.ContentLength > 0)
+                    {
+                        string FileName = Path.GetFileName(f.FileName);
+                        string UpLoadFile = Server.MapPath("~/wwwroot/ImageBrands/") + FileName;
+                        f.SaveAs(UpLoadFile);
+                        brands.AnhTH = FileName;
+                    }
+                    db.Brands.Add(brands);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
                 }
-                db.Brands.Add(brands);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
+            }    
+            else
+            {
+                ViewBag.Error = "Thương hiệu đã tồn tại";
+                return View(brands);
+            }    
             return View(brands);
         }
 

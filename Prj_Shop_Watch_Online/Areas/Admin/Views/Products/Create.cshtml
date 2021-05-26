@@ -10,7 +10,13 @@
     <div class="card-header py-3">
         <h2>Tạo mới</h2>
         <p>Sản phẩm</p>
+        @if (ViewBag.Error != null)
+        {
+            <br />
+            <div class="alert alert-danger text-center" role="alert" style="color:red">@ViewBag.Error</div>
+        }
     </div>
+
     <div class="card-body">
         <div class="row ">
             <div class="col-md-4">
@@ -164,7 +170,7 @@
                             </div>
                         </div>
                     </div>
-                }
+                }               
             </div>
             <div class="col-md-8">
                 <h4>Ảnh sản phẩm</h4>

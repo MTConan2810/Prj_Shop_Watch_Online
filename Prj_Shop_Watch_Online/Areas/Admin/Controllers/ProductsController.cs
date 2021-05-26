@@ -72,13 +72,21 @@ namespace Prj_Shop_Watch_Online.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,MaSp,TenSp,Gia,GioiTinh,LoaiDH,KieuDH,DoChiuNuoc,ChucNang,Vo,LoaiDay,DuongKinh,LoaiMay,MauMat,MatKinh,MoTa,BrandId,SoLuong")] Products products)
         {
-            if (ModelState.IsValid)
+            var procheck = db.Products.Where(a => a.MaSp.Equals(products.MaSp)).ToList();
+            if (procheck.Count == 0)
             {
-                db.Products.Add(products);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Edit", new { id = products.Id });
+                if (ModelState.IsValid)
+                {
+                    db.Products.Add(products);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Edit", new { id = products.Id });
+                }
             }
-
+            else
+            {
+                ViewBag.Error = "Sản phẩm đã tồn tại";
+                return View(products);
+            }
             ViewBag.BrandId = new SelectList(db.Brands, "Id", "TenTH", products.BrandId);
             return View(products);
         }

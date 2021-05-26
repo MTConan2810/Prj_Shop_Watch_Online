@@ -10,6 +10,11 @@
     <div class="card-header py-3">
         <h2>Tạo mới</h2>
         <p>Tài khoản</p>
+        @if (ViewBag.thongbao != null)
+        {
+            <br />
+            <div class="alert alert-danger text-center" role="alert" style="color:red">@ViewBag.thongbao</div>
+        }
     </div>
     <div class="card-body">
         <div class="row ">
@@ -87,12 +92,7 @@
                             </div>
                         </div>
                     </div>
-                }
-                @if (ViewBag.thongbao != null)
-                {
-                    <br />
-                    <div class="alert alert-danger text-center" role="alert" style="color:red">@ViewBag.thongbao</div>
-                }
+                }               
             </div>
             <div class="col-md-8">
                 <h4>Quyền</h4>
