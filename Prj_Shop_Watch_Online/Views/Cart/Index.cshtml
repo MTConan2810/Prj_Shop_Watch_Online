@@ -37,151 +37,155 @@
         int stt = 1;
         decimal total = 0;
         decimal? giakm = 0;
-    <div class="table-responsive col-md-7">
-        <table class="table table-hover" id="table-cart">
-            <thead class="table-success text-center" >
-                <tr>
-                    <td>STT</td>
-                    <td>Ảnh</td>
-                    <td>Số lượng</td>
-                    <td>Khuyến mãi</td>
-                    <td>Thành tiền</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                @foreach (var item in Model)
-                {
-                    var anh = db.ProductImage.Where(s => s.ProductId == item.Products.Id).Select(s => s).ToList();
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover" id="table-cart" width="100%" cellspacing="0">
+                <thead class="table-success text-center">
                     <tr>
-                        <td width="20">@(stt++)</td>
-                        <td width="120">
-                            @foreach (var obj in anh)
-                            {
-                                if (obj.IsDefault == true)
-                                {
-                                    string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
-                                    <img class="img-thumbnail" src="@Url.Content(ImagePath)" alt="@obj.Caption" width="100" height="100" title="@obj.Caption" />
-                                }
-
-                            }
-                            <p></p>
-                            <p>
-                                @Html.DisplayFor(model => item.Products.TenSp) @Html.DisplayFor(model => item.Products.MaSp)                           
-                            </p>
-                            <p>
-                                @String.Format("{0:C}", item.Products.Gia)
-                            </p>
-                            
-                        </td>
-                        <td width="180">
-                            @if (item.quantity <= 1)
-                            {
-                                <button class="btn btnUpdateDesc" name="productId"
-                                        data-ProductId="@item.Products.Id" disabled>
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            }
-                            else
-                            {
-                                <button class="btn btnUpdateDesc" name="productId"
-                                        data-ProductId="@item.Products.Id">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            }
-                            <input style="width:35px" type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="@item.Products.SoLuong" class="test-quantity" data-ProductId="@item.Products.Id" />
-                            @if (item.quantity >= item.Products.SoLuong)
-                            {
-                                <button class="btn btnUpdate" name="productId"
-                                        data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")" disabled>
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            }
-                            else
-                            {
-                                <button class="btn btnUpdate" name="productId"
-                                        data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            }
-
-                        </td>
-                        @if (checkQuyen(item.Products.Id) == false)
-                        {
-                            giakm = item.Products.Gia * item.quantity;
-                            <td width="100"></td>
-                            <td width="140">@String.Format("{0:C}", giakm)</td>
-                            total += (decimal)giakm;
-                        }
-                        @if (kmapplyforall.Count > 0)
-                        {
-                            foreach (var km in checkkm)
-                            {
-
-                                if (km.ApplyForAll == true)
-                                {
-                                    if (km.DiscountPercent != null)
-                                    {
-                                        giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
-                                        <td width="100">@km.Name</td>
-                                        <td width="140">@String.Format("{0:C}", giakm)</td>
-                                        total += (decimal)giakm;
-
-                                    }
-                                    else if (km.DiscountAmount != null)
-                                    {
-                                        giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
-                                        <td width="100">@km.Name</td>
-                                        <td width="140">@String.Format("{0:C}", giakm)</td>
-                                        total += (decimal)giakm;
-                                    }
-
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (var km in checkkm)
-                            {
-
-                                if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
-                                {
-                                    if (km.DiscountPercent != null)
-                                    {
-                                        giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
-                                        <td width="100">@km.Name</td>
-                                        <td width="140">@String.Format("{0:C}", giakm)</td>
-                                        total += (decimal)giakm;
-
-                                    }
-                                    else if (km.DiscountAmount != null)
-                                    {
-                                        giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
-                                        <td width="100">@km.Name</td>
-                                        <td width="140">@String.Format("{0:C}", giakm)</td>
-                                        total += (decimal)giakm;
-
-                                    }
-                                }
-
-                            }
-                        }
-
-                        <td class="text-left">                           
-                            <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
-                               class="btn btn-danger" id="btnXoa"><i class="far fa-trash-alt fa-1x"></i></a>
-                        </td>
+                        <th width="3%">STT</th>
+                        <th width="35%">Ảnh</th>
+                        <th width="15%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Số lượng</th>
+                        <th width="22%">Khuyến mãi</th>
+                        <th width="20%">Thành tiền</th>
+                        <th width="5%"></th>
                     </tr>
-                }
-                <tr>
-                    <td colspan="4" class="text-right">Tổng tiền</td>
-                    <td class="text-left">@String.Format("{0:C}", total)</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="text-left">
+                    @foreach (var item in Model)
+                    {
+                        var anh = db.ProductImage.Where(s => s.ProductId == item.Products.Id).Select(s => s).ToList();
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>
+                                @foreach (var obj in anh)
+                                {
+                                    if (obj.IsDefault == true)
+                                    {
+                                        string ImagePath = "~/wwwroot/ImageProducts/" + obj.ImagePath;
+                                        <img class="img-thumbnail" src="@Url.Content(ImagePath)" alt="@obj.Caption" width="100" height="100" title="@obj.Caption" />
+                                    }
+
+                                }
+                                <p></p>
+                                <h5 class="card-title" style="font-weight:bold;">
+                                    Đồng hồ @Html.DisplayFor(model => item.Products.TenSp) @Html.DisplayFor(model => item.Products.MaSp)
+                                </h5>
+                                <p class="card-text" style="font-variant-caps:normal; font-style:italic; color:cadetblue;">@Html.DisplayFor(model => item.Products.Brands.TenTH)</p>
+                                <p>
+                                    Giá gốc: @String.Format("{0:C}", item.Products.Gia)
+                                </p>
+                            </td>
+
+                            <td>
+                                @if (item.quantity <= 1)
+                                {
+                                    <button class="btn btnUpdateDesc" name="productId"
+                                            data-ProductId="@item.Products.Id" disabled>
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btnUpdateDesc" name="productId"
+                                            data-ProductId="@item.Products.Id">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                }
+                                <input style="width:35px" type="number" id="@($"quantity-{item.Products.Id}")" value="@item.quantity" min="1" max="@item.Products.SoLuong" class="test-quantity" data-ProductId="@item.Products.Id" />
+                                @if (item.quantity >= item.Products.SoLuong)
+                                {
+                                    <button class="btn btnUpdate" name="productId"
+                                            data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")" disabled>
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btnUpdate" name="productId"
+                                            data-ProductId="@item.Products.Id" id="@($"asquantity-{item.Products.Id}")">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                }
+
+                            </td>
+                            @if (checkQuyen(item.Products.Id) == false)
+                            {
+                                giakm = item.Products.Gia * item.quantity;
+                                <td></td>
+                                <td>@String.Format("{0:C}", giakm)</td>
+                                total += (decimal)giakm;
+                            }
+                            @if (kmapplyforall.Count > 0)
+                            {
+                                foreach (var km in checkkm)
+                                {
+
+                                    if (km.ApplyForAll == true)
+                                    {
+                                        if (km.DiscountPercent != null)
+                                        {
+                                            giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
+                                            <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
+                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            total += (decimal)giakm;
+
+                                        }
+                                        else if (km.DiscountAmount != null)
+                                        {
+                                            giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
+                                            <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
+                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            total += (decimal)giakm;
+                                        }
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var km in checkkm)
+                                {
+
+                                    if (km.ProductId == item.Products.Id || km.BrandId == item.Products.BrandId)
+                                    {
+                                        if (km.DiscountPercent != null)
+                                        {
+                                            giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
+                                            <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p> </td>
+                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            total += (decimal)giakm;
+
+                                        }
+                                        else if (km.DiscountAmount != null)
+                                        {
+                                            giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
+                                            <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
+                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            total += (decimal)giakm;
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            <td class="text-left">
+                                <a href="@Url.Action("RemoveCart","Cart",new { productId = item.Products.Id })"
+                                   class="btn btn-danger" id="btnXoa"><i class="far fa-trash-alt fa-1x"></i></a>
+                            </td>
+                        </tr>
+                    }                    
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" class="text-right">Tổng tiền:</th>
+                        <td class="text-left">@String.Format("{0:C}", total)</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-                
         <div class="row clearfix">
             <div class="col-md-5">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -241,7 +245,7 @@
                                 }
                             </script>*@
                         }
-                        <a href="/" class="btn btn-danger offset-3" style="margin-top:15px;">Tiếp tục mua hàng</a>
+                        <a href="/" class="btn btn-danger offset-3" style="margin-top:15px;"><i class="fas fa-play fa-rotate-180"></i> Tiếp tục mua hàng</a>
                     </div>
                     <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">                      
                     </div>
