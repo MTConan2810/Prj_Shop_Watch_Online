@@ -46,7 +46,7 @@
                                     }
                                 }
                             }
-                            @String.Format("{0:C}", tongThang)
+                            @String.Format("{0:C}", tongThang).Replace(",00", "")
                         </div>
                     </div>
                     <div class="col-auto">
@@ -66,7 +66,7 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Thu nhập (hàng năm @DateTime.Now.Year)
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@String.Format("{0:C}", tongnam)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@String.Format("{0:C}", tongnam).Replace(",00", "")</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

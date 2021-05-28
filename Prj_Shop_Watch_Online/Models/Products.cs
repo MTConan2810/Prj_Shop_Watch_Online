@@ -29,6 +29,7 @@
 
         [Required(ErrorMessage = "Giá không được để trống")]
         [DisplayName("Giá")]
+        [DisplayFormat(DataFormatString = "{0:#.###}",ApplyFormatInEditMode = true)]
         public decimal? Gia { get; set; }
 
         [DisplayName("Giới tính")]

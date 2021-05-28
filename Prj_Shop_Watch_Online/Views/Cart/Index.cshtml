@@ -72,7 +72,7 @@
                                 </h5>
                                 <p class="card-text" style="font-variant-caps:normal; font-style:italic; color:cadetblue;">@Html.DisplayFor(model => item.Products.Brands.TenTH)</p>
                                 <p>
-                                    Giá gốc: @String.Format("{0:C}", item.Products.Gia)
+                                    Giá gốc: @String.Format("{0:C}", item.Products.Gia).Replace(",00", "")
                                 </p>
                             </td>
 
@@ -112,7 +112,7 @@
                             {
                                 giakm = item.Products.Gia * item.quantity;
                                 <td></td>
-                                <td>@String.Format("{0:C}", giakm)</td>
+                                <td>@String.Format("{0:C}", giakm).Replace(",00", "")</td>
                                 total += (decimal)giakm;
                             }
                             @if (kmapplyforall.Count > 0)
@@ -126,7 +126,7 @@
                                         {
                                             giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
                                             <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
-                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            <td>@String.Format("{0:C}", giakm).Replace(",00", "")</td>
                                             total += (decimal)giakm;
 
                                         }
@@ -134,7 +134,7 @@
                                         {
                                             giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
                                             <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
-                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            <td>@String.Format("{0:C}", giakm).Replace(",00", "")</td>
                                             total += (decimal)giakm;
                                         }
 
@@ -152,7 +152,7 @@
                                         {
                                             giakm = (item.Products.Gia - (decimal)(item.Products.Gia * km.DiscountPercent / 100)) * item.quantity;
                                             <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p> </td>
-                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            <td>@String.Format("{0:C}", giakm).Replace(",00", "")</td>
                                             total += (decimal)giakm;
 
                                         }
@@ -160,7 +160,7 @@
                                         {
                                             giakm = (item.Products.Gia - (decimal)km.DiscountAmount) * item.quantity;
                                             <td><p style="color:red;font-style:italic;text-shadow:4px 4px 8px pink;"><i class="fas fa-gift" style="color:red"></i> @km.Name</p></td>
-                                            <td>@String.Format("{0:C}", giakm)</td>
+                                            <td>@String.Format("{0:C}", giakm).Replace(",00", "")</td>
                                             total += (decimal)giakm;
 
                                         }
@@ -179,7 +179,7 @@
                 <tfoot>
                     <tr>
                         <th colspan="4" class="text-right">Tổng tiền:</th>
-                        <td class="text-left">@String.Format("{0:C}", total)</td>
+                        <td class="text-left">@String.Format("{0:C}", total).Replace(",00", "")</td>
                         <td></td>
                     </tr>
                 </tfoot>

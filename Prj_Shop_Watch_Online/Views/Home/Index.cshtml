@@ -129,7 +129,7 @@
                     <p class="card-text" style="font-variant-caps:normal; font-style:italic; color:cadetblue;">@Html.DisplayFor(model => item.Brands.TenTH)</p>
                     @if (checkQuyen(item.Id) == false)
                     {
-                        <p>Giá: @String.Format("{0:C}", item.Gia)</p>
+                <p>Giá: @String.Format("{0:C}", item.Gia).Replace(",00", "")</p>
                     }
                     @if (kmapplyforall.Count > 0)
                     {
@@ -141,14 +141,14 @@
                                 if (km.DiscountPercent != null)
                                 {
                                     giakm = item.Gia - (decimal)item.Gia * km.DiscountPercent / 100;
-                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
-                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                                 }
                                 else if (km.DiscountAmount != null)
                                 {
                                     giakm = item.Gia - (decimal)km.DiscountAmount;
-                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
-                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount).Replace(",00", ""))</sup></p>
+                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                                 }
 
                             }                            
@@ -165,14 +165,14 @@
                                 if (km.DiscountPercent != null)
                                 {
                                     giakm = item.Gia - (decimal)item.Gia * km.DiscountPercent / 100;
-                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
                                     <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
                                 }
                                 else if (km.DiscountAmount != null)
                                 {
                                     giakm = item.Gia - (decimal)km.DiscountAmount;
-                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
-                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                                    <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount).Replace(",00", ""))</sup></p>
+                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                                 }
                             }
 

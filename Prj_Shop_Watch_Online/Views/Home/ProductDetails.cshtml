@@ -107,7 +107,7 @@
                 <h4>Giá niêm yết</h4>
                 @if (checkQuyen(Model.Id) == false)
                 {
-                    <p>@String.Format("{0:C}", Model.Gia)</p>
+                    <p>@String.Format("{0:C}", Model.Gia).Replace(",00","")</p>
                 }
                 @foreach (var km in kmResult)
                 {
@@ -117,14 +117,14 @@
                         if (km.DiscountPercent != null)
                         {
                             giakm = Model.Gia - (decimal)Model.Gia * km.DiscountPercent / 100;
-                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
-                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                         }
                         else if (km.DiscountAmount != null)
                         {
                             giakm = Model.Gia - (decimal)km.DiscountAmount;
-                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
-                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
+                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                         }
 
                     }
@@ -133,14 +133,14 @@
                         if (km.DiscountPercent != null)
                         {
                             giakm = Model.Gia - (decimal)Model.Gia * km.DiscountPercent / 100;
-                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
-                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
+                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                         }
                         else if (km.DiscountAmount != null)
                         {
                             giakm = Model.Gia - (decimal)km.DiscountAmount;
-                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia)</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount))</sup></p>
-                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                            <p><i class="fas fa-gift" style="color:red"></i> <del>@String.Format("{0:C}", Model.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(- @String.Format("{0:C}", km.DiscountAmount).Replace(",00", ""))</sup></p>
+                            <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                         }
                     }
 
