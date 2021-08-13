@@ -166,7 +166,7 @@
                                 {
                                     giakm = item.Gia - (decimal)item.Gia * km.DiscountPercent / 100;
                                     <p><i class="fas fa-gift" style="color:red"></i> Giá: <del>@String.Format("{0:C}", item.Gia).Replace(",00", "")</del><sup style="color:red;font-style:italic;text-shadow:4px 4px 8px blue;">(@km.DiscountPercent%)</sup></p>
-                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm)</p>
+                                    <p style="color:red; font-weight:bold;">@String.Format("{0:C}", giakm).Replace(",00", "")</p>
                                 }
                                 else if (km.DiscountAmount != null)
                                 {
